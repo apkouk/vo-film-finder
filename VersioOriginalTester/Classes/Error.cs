@@ -11,7 +11,7 @@ namespace VersioOriginalTester
     {
         public void SendError(Exception ex)
         {
-
+            System.Console.WriteLine(ex);
         }
     }
 }

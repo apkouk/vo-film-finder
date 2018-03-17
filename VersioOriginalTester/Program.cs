@@ -13,20 +13,16 @@ namespace VersioOriginalTester
     {
         static void Main(string[] args)
         {
-            FilmFinder filmFinder = new FilmFinder(LoadWebsites()); 
+            LoadWebsites(); 
         }
 
-        private static ArrayList LoadWebsites()
-        {
-            ArrayList webs = new ArrayList();
-            Website website = new Website();
-            website.Name = "ElPeriodico";
-            website.Tag = "elperiodico";
-            website.FilenameSaving = "elperiodico";
-            website.Url = "https://cartelera.elperiodico.com/cines/";
-            website.LastExecution = DateTime.Now.AddHours(-1);
-            webs.Add(website);
-            return webs;
+        private static void LoadWebsites()
+        {   
+            IScrapper page = new VenuePage();
+            page.URL = "https://cartelera.elperiodico.com/cines/";
+            WebScrapper venueWebScrapper = new WebScrapper(page);
+
+           
         }
     }
 }
