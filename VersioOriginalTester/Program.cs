@@ -13,7 +13,7 @@ namespace VersioOriginalTester
     {
         static void Main(string[] args)
         {
-            IScrapper page = new Scrapper("Venues");
+            IScrapper page = new Scrapper("Towns");
             page.URL = "https://cartelera.elperiodico.com/cines/";
             WebScrapper venueWebScrapper = new WebScrapper(page);
             

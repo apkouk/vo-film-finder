@@ -16,13 +16,15 @@ namespace VersioOriginalTester.Classes
         public WebScrapper(IScrapper page)
         {
             this.Page = page;
-
             if(page.HasChanged())
             {
                 Console.WriteLine("TO EXECUTE COMPARISION WITH DATABASE");              
                 //Use Page.JsonContent to update database               
             }
+            else
+            { 
             Console.WriteLine("NOTHING TO DO, GRAB A BEER!");
+            }
         }
 
         public IScrapper Page
