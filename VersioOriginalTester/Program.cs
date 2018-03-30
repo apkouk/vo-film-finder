@@ -16,7 +16,7 @@ namespace VersioOriginalTester
             IScrapper page = new Scrapper("Venues");
             page.URL = "https://cartelera.elperiodico.com/cines/";
             WebScrapper venueWebScrapper = new WebScrapper(page);
-
+            
             Console.ReadLine();
         }
     }
