@@ -13,16 +13,11 @@ namespace VersioOriginalTester
     {
         static void Main(string[] args)
         {
-            LoadWebsites(); 
-        }
-
-        private static void LoadWebsites()
-        {   
-            IScrapper page = new VenuePage();
+            IScrapper page = new Scrapper("Venues");
             page.URL = "https://cartelera.elperiodico.com/cines/";
             WebScrapper venueWebScrapper = new WebScrapper(page);
 
-           
+            Console.ReadLine();
         }
     }
 }

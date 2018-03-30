@@ -17,11 +17,12 @@ namespace VersioOriginalTester.Classes
         {
             this.Page = page;
 
-            if(page.ExecuteScrapper())
+            if(page.HasChanged())
             {
-                page.GetHtmlFromPage();               
-                page.GetContentInJson();
-            }          
+                Console.WriteLine("TO EXECUTE COMPARISION WITH DATABASE");              
+                //Use Page.JsonContent to update database               
+            }
+            Console.WriteLine("NOTHING TO DO, GRAB A BEER!");
         }
 
         public IScrapper Page

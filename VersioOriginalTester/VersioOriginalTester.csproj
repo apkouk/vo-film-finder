@@ -49,7 +49,7 @@
     <Compile Include="Classes\IScrapper.cs" />
     <Compile Include="Classes\Stringizer.cs" />
     <Compile Include="Classes\Venue.cs" />
-    <Compile Include="Classes\VenuePage.cs" />
+    <Compile Include="Classes\Scrapper.cs" />
     <Compile Include="Classes\WebScrapper.cs" />
     <Compile Include="Interfaces\IError.cs" />
     <Compile Include="Classes\Error.cs" />

@@ -37,11 +37,67 @@ namespace VersioOriginalTester.Classes
             throw new NotImplementedException();
         }
 
-    
+        public void GetContentInJson(string path)
+        {
+            throw new NotImplementedException();
+        }
 
-public void GetContentInJson()
-{
- 	throw new NotImplementedException();
-}
-}
+        public void GetHtmlFromPage(string PATH_PROCESSED)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IScrapper.URL
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        string IScrapper.HtmlContent
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        string IScrapper.JsonContent
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        void IScrapper.GetHtmlFromPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IScrapper.GetContentInJson(string PATH_PROCESSED)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public bool HasChanged()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

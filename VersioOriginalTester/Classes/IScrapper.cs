@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace VersioOriginalTester.Classes
 {
     public interface IScrapper
-    {      
+    {
         string URL { get; set; }
         string HtmlContent { get; set; }
-        
-        bool ExecuteScrapper();
+        string JsonContent { get; set; }
+
+        bool HasChanged();
         void GetHtmlFromPage();
-        void GetContentInJson();    
+        void GetContentInJson(string path);
     }
 }
