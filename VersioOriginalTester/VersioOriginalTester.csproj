@@ -76,22 +76,27 @@
     <Compile Include="Helpers\CinevoRequests.cs" />
     <Compile Include="Interfaces\IScrapper.cs" />
     <Compile Include="Helpers\CinevoStrings.cs" />
-    <Compile Include="Models\Town.cs" />
     <Compile Include="Classes\WebScrapper.cs" />
     <Compile Include="Interfaces\IError.cs" />
     <Compile Include="Classes\Error.cs" />
+    <Compile Include="Models\Film.cs" />
+    <Compile Include="Models\Town.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scrappers\CinemaScrapper.cs" />
+    <Compile Include="Scrappers\FilmScrapper.cs" />
     <Compile Include="Scrappers\TownScrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="HtmlCinemas\Processed\Towns_636580465684351233.html" />
+    <Folder Include="HtmlFiles\CinemaScrapper\" />
+    <Folder Include="HtmlFiles\FilmScrapper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HtmlFiles\TownScrapper\Processed\Towns_636580465684351233.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
