@@ -13,9 +13,9 @@ namespace VersioOriginalTester
     {
         static void Main(string[] args)
         {
-            IScrapper page = new Scrapper("Towns");
-            page.URL = "https://cartelera.elperiodico.com/cines/";
-            WebScrapper venueWebScrapper = new WebScrapper(page);
+            IScrapper townsPage = new TownScrapper();
+            townsPage.URL = "https://cartelera.elperiodico.com/cines/";
+            WebScrapper webScrapper = new WebScrapper(townsPage);
             
             Console.ReadLine();
         }
