@@ -6,14 +6,14 @@ using System.Linq;
 using VersioOriginalTester.Helpers;
 using VersioOriginalTester.Interfaces;
 using VersioOriginalTester.Models;
-
+using System.Configuration.Assemblies;
 
 namespace VersioOriginalTester.Scrappers
 {
     public class TownScrapper : IScrapper
     {
-        private const string PATH = @"..\..\HtmlCinemas\";
-        private const string PATH_PROCESSED = @"..\..\HtmlCinemas\Processed";
+        private string PATH = System.Configuration.ConfigurationSettings.AppSettings.GetValues("PathTownScrapper")[0];
+        private string PATH_PROCESSED = System.Configuration.ConfigurationSettings.AppSettings.GetValues("PathTownScrapper")[0];
         
         public List<Town> towns = new List<Town>();
         public List<Town> Towns
@@ -46,7 +46,7 @@ namespace VersioOriginalTester.Scrappers
         public TownScrapper() { }
 
         public void GetHtmlFromPage()
-        {
+        {            
             try
             {                
                 HtmlContent = CinevoRequests.GetContent(URL).Trim().TrimEnd().TrimStart();
