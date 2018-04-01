@@ -11,7 +11,7 @@ namespace CinevoScrapper
         private static void Main(string[] args)
         {
 
-            IScrapper townsPage = new TownScrapper
+            IScrapperTown townsPage = new TownScrapper
             {
                 Path = Properties.CinevoScrapper.Default.TownScrapper,
                 PathProcessed = Properties.CinevoScrapper.Default.TownScrapperProcessed,
@@ -33,7 +33,7 @@ namespace CinevoScrapper
 
 
             
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace CinevoScrapper.Scrappers
 {
-    public class TownScrapper : IScrapper   
+    public class TownScrapper : IScrapperTown   
     {
         public string HtmlContent { get; set; }
         public string JsonContent { get; set; }
@@ -17,7 +17,8 @@ namespace CinevoScrapper.Scrappers
         public string Url { get; set; }
         public string Path { get; set; }
         public string PathProcessed { get; set; }
-        
+        public List<Town> Towns { get; set; }
+
         public void GetHtmlFromUrl()
         {
             try
@@ -57,12 +58,15 @@ namespace CinevoScrapper.Scrappers
                             towns.Add(ConvertToObject(line));
                 }
 
+                Towns = towns;
                 fileReader.Close();
                 fileReader.Dispose();
             }
       
             JsonContent = JsonConvert.SerializeObject(towns).Trim().TrimEnd().TrimStart();
         }
+
+        
 
         bool IScrapper.HasChanged()
         {

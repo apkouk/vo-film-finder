@@ -3,7 +3,7 @@ using CinevoScrapper.Models;
 
 namespace CinevoScrapper.Interfaces
 {
-    public interface IScrapper
+    public interface IScrapper 
     {
         string Url { get; set; }
         string HtmlContent { get; set; }

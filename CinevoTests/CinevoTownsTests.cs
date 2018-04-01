@@ -8,9 +8,9 @@ namespace CinevoTests
     [TestClass]
     public class CinevoTownsTests
     {
-        private IScrapper EqualObjets()
+        private IScrapperTown EqualObjets()
         {
-            IScrapper townsPage = new TownScrapper
+            IScrapperTown townsPage = new TownScrapper
             {
                 Path = Properties.CinevoScrapperTest.Default.TownEqual,
                 PathProcessed = Properties.CinevoScrapperTest.Default.TownEqualProcessed,
@@ -19,9 +19,9 @@ namespace CinevoTests
             };
             return townsPage;
         }
-        private IScrapper DiffObjets()
+        private IScrapperTown DiffObjets()
         {
-            IScrapper townsPage = new TownScrapper
+            IScrapperTown townsPage = new TownScrapper
             {
                 Path = Properties.CinevoScrapperTest.Default.TownDiff,
                 PathProcessed = Properties.CinevoScrapperTest.Default.TownDiffProcessed,
@@ -54,5 +54,14 @@ namespace CinevoTests
             var webScrapper = new WebScrapper(townsPage);
             Assert.IsTrue(webScrapper.Page.JsonContent.Length > 100);
         }
+
+        [TestMethod]
+        public void Should_return_return_a_list_of_towns()
+        {
+            IScrapperTown townsPage = EqualObjets();
+            var webScrapper = new WebScrapper(townsPage);
+            Assert.IsTrue(townsPage.Towns.Count > 5);
+        }
+
     }
 }
