@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CinevoTests.Properties" GeneratedClassName="CinevoScrapperTest">
+  <Profiles />
+  <Settings>
+    <Setting Name="TownEqual" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\..\CinevoTests\FilesAreEqual\Towns</Value>
+    </Setting>
+    <Setting Name="TownEqualProcessed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\..\CinevoTests\FilesAreEqual\Towns\Processed</Value>
+    </Setting>
+    <Setting Name="TownDiff" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\..\CinevoTests\FilesAreDiff\Towns</Value>
+    </Setting>
+    <Setting Name="TownDiffProcessed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\..\CinevoTests\FilesAreDiff\Towns\Processed</Value>
+    </Setting>
+    <Setting Name="CleanDirectories" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
