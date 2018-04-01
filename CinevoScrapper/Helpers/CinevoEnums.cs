@@ -4,7 +4,8 @@
     {
         public enum PageTypes
         {
-            Town
+            Town,
+            Cinema
         }
         public enum Warning
         {

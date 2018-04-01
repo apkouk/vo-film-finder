@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IScrapperCinema.cs" />
     <Compile Include="Interfaces\IScrapperTown.cs" />
     <Compile Include="Properties\CinevoScrapper.cs" />
     <Compile Include="Properties\CinevoScrapper.Designer.cs">

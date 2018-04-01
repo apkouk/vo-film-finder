@@ -11,6 +11,7 @@ namespace CinevoScrapper.Helpers
         public string OldFilePath { get; set; }
         public string Path { get; set; }
         public bool HasChanged { get; set; }
+        public CinevoEnums.PageTypes Type { get; set; }
 
         public static void SaveToFile(string path, string fileName, string extension, string content)
         {
@@ -26,18 +27,26 @@ namespace CinevoScrapper.Helpers
         {
             if (Directory.Exists(OldFilePath))
             {
-                IScrapper townComparer = new TownScrapper();
-                townComparer.GetContentInJson(OldFilePath);
-
                 if (Scrapper.JsonContent == null)
                 {
                     Scrapper.GetHtmlFromUrl();
                     Scrapper.GetContentInJson(Path);
                 }
 
-                HasChanged = !Scrapper.JsonContent.Equals(townComparer.JsonContent); 
+                switch (Type)
+                {
+                    case CinevoEnums.PageTypes.Town:
+                        IScrapperTown townComparer = new TownScrapper();
+                        townComparer.GetContentInJson(OldFilePath);
+                        HasChanged = !Scrapper.JsonContent.Equals(townComparer.JsonContent);
+                        break;
+                    case CinevoEnums.PageTypes.Cinema:
+                        IScrapperCinema cinemaComparer = new CinemaScrapper();
+                        cinemaComparer.GetContentInJson(OldFilePath);
+                        HasChanged = !Scrapper.JsonContent.Equals(cinemaComparer.JsonContent);
+                        break;
+                }
             }
-
         }
     }
 }

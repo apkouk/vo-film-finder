@@ -25,37 +25,37 @@ namespace CinevoTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual\\Towns")]
-        public string TownEqual {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual")]
+        public string EqualFilesDownloaded {
             get {
-                return ((string)(this["TownEqual"]));
+                return ((string)(this["EqualFilesDownloaded"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual\\Towns\\Processed")]
-        public string TownEqualProcessed {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual\\Old")]
+        public string EqualFilesOld {
             get {
-                return ((string)(this["TownEqualProcessed"]));
+                return ((string)(this["EqualFilesOld"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreDiff\\Towns")]
-        public string TownDiff {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreDiff")]
+        public string DiffFilesDownloaded {
             get {
-                return ((string)(this["TownDiff"]));
+                return ((string)(this["DiffFilesDownloaded"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreDiff\\Towns\\Processed")]
-        public string TownDiffProcessed {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreDiff\\Old")]
+        public string DiffFilesOld {
             get {
-                return ((string)(this["TownDiffProcessed"]));
+                return ((string)(this["DiffFilesOld"]));
             }
         }
         
@@ -65,6 +65,18 @@ namespace CinevoTests.Properties {
         public bool CleanDirectories {
             get {
                 return ((bool)(this["CleanDirectories"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://cartelera.elperiodico.com/cines/")]
+        public string UrlTowns {
+            get {
+                return ((string)(this["UrlTowns"]));
+            }
+            set {
+                this["UrlTowns"] = value;
             }
         }
     }

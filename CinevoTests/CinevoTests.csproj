@@ -57,6 +57,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="CinevoCinemasTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -66,10 +67,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FilesAreDiff\Towns\TownDownloaded.html" />
-    <Content Include="FilesAreDiff\Towns\Processed\TownOld.html" />
-    <Content Include="FilesAreEqual\Towns\Processed\TownOld.html" />
-    <Content Include="FilesAreEqual\Towns\TownDownloaded.html" />
+    <Content Include="FilesAreDiff\Downloaded.html" />
+    <Content Include="FilesAreDiff\Old\Old.html" />
+    <Content Include="FilesAreEqual\Downloaded.html" />
+    <Content Include="FilesAreEqual\Old\Old.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CinevoScrapper\CinevoScrapper.csproj">
