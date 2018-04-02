@@ -1,4 +1,6 @@
-﻿namespace CinevoScrapper.Models
+﻿using System.Collections.Generic;
+
+namespace CinevoScrapper.Models
 {
     public class Cinema
     {
@@ -13,5 +15,6 @@
         public decimal Longitude { get; set; }
         public string TownId { get; set; }
         public string Town { get; set; }
+        public List<Film> Films = new List<Film>();
     }
 }

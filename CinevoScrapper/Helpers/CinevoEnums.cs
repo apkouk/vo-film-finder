@@ -5,7 +5,9 @@
         public enum PageTypes
         {
             Town,
-            Cinema
+            Cinema,
+            FilmsCinema,
+            FilmInfo
         }
         public enum Warning
         {

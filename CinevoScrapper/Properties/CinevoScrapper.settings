@@ -2,20 +2,23 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CinevoScrapper.Properties" GeneratedClassName="CinevoScrapper">
   <Profiles />
   <Settings>
-    <Setting Name="TownScrapper" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">..\..\HtmlFiles\TownScrapper\</Value>
+    <Setting Name="PathTownsCinemas" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\HtmlFiles\TownsAndCinemas\</Value>
     </Setting>
-    <Setting Name="TownScrapperProcessed" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">..\..\HtmlFiles\TownScrapper\Processed</Value>
-    </Setting>
-    <Setting Name="CinemaScrapper" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">..\..\HtmlFiles\CinemaScrapper\</Value>
-    </Setting>
-    <Setting Name="CinemaScrapperProcessed" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">..\..\HtmlFiles\CinemaScrapper\Processed</Value>
+    <Setting Name="PathTownsCinemaProcessed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\HtmlFiles\TownsAndCinemas\Processed</Value>
     </Setting>
     <Setting Name="CleanDirectories" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="IsTestEnvironment" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PathFilmCinema" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\HtmlFiles\FilmScrapper\</Value>
+    </Setting>
+    <Setting Name="PathFimlCinemaProcessed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\HtmlFiles\FilmScrapper\Processed</Value>
     </Setting>
   </Settings>
 </SettingsFile>

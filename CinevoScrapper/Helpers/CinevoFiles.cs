@@ -13,6 +13,11 @@ namespace CinevoScrapper.Helpers
         public bool HasChanged { get; set; }
         public CinevoEnums.PageTypes Type { get; set; }
 
+        public CinevoFiles()
+        {
+            
+        }
+
         public static void SaveToFile(string path, string fileName, string extension, string content)
         {
             //Move to App.config
@@ -20,7 +25,14 @@ namespace CinevoScrapper.Helpers
                 Directory.CreateDirectory(path);
             var file = path + "\\" + fileName + "_" + DateTime.Now.Ticks + "." + extension;
             File.WriteAllText(file, content);
-            Console.WriteLine(extension.ToUpper() + "-- File " + fileName + extension + " SAVED");
+            Console.WriteLine("CINEVO FILES: " + fileName + "." + extension + " SAVED");
+        }
+
+        public static void DeleteAllFiles(string path)
+        {
+            Console.WriteLine("CINEVO FILES: " + Directory.GetFiles(path)[0] + " DELETED");
+            File.Delete(Directory.GetFiles(path)[0]);
+            
         }
 
         internal void MakeComparision()
@@ -46,6 +58,7 @@ namespace CinevoScrapper.Helpers
                         HasChanged = !Scrapper.JsonContent.Equals(cinemaComparer.JsonContent);
                         break;
                 }
+                Console.WriteLine("CINEVO FILES: " + Type.ToString() + " comparision done");
             }
         }
     }

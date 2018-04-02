@@ -2,23 +2,58 @@
 ---------------------------------------------------------     CINEVO     -----------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------
 
+Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
 
 GENERAL
 - We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
 - Process to get just the differences between jsons/collections
 
+DATABASE
+- Make mongoDb in local and develop on it
+- Move mongoDB to cluster online
+- One document with all tonws, every town will have a collection of cinemas and every cinema will have a collection of films with a collection of showings
+- Make one document for old date and another one for the new data, much easier to compare data and make inserts/deletes
+
+
+
+APIS
+- Will make an api using WebApi (.net) to get films info on demmand
+- Will build another api using Node (js) to make a backend to manage the app
+
+
+ACCOUNT
+- Everything to do 
+
+TESTING
+66% of coverage test :) Really happy!!
+Use that tool to make it even better
 
 ERROR HANDLING
 - Immprove error helper
 - Add try/catch wherever they needed
 
-
-DATABASE
-- Make mongoDb in local and develop on it
-- Move mongoDB to cluster online
-
+GIT
+- Start using branches
 
 INVESTIGATE
 - Find out why the test for checking that two file are equal get considerably more time thant the others
 
+ADDINGS
+- We are reading the html file twice to get town and cinemas data. We can make it doing it once, it's the same file (not important for now)
+- Show cinemas near me wiht original version films on map
+
+FRONTEND
+- In React :)
+	FILTERS
+		Town, Cinema, Film, Distance
+
+BACKEND
+- Node and express
+
+INFRASCTRUCTURE
+- The cinevo scrapper will update just once a day while I'm having my laptop on
+- I'd like to use docker for the front and back end
+- I'll need another domain 
+
+Once everything is done will start with react native
 

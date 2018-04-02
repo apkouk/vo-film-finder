@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace CinevoScrapper.Scrappers
 {
-    public class TownScrapper : IScrapperTown   
+    public class TownScrapper : IScrapperTown
     {
         public string Url { get; set; }
         public string HtmlContent { get; set; }
@@ -40,6 +40,7 @@ namespace CinevoScrapper.Scrappers
                 };
 
                 file.MakeComparision();
+                Console.WriteLine("CINEVO TOWN SCRAPPER: Has content changed? => " + file.HasChanged);
                 return file.HasChanged;
             }
             catch (Exception ex)
@@ -84,11 +85,13 @@ namespace CinevoScrapper.Scrappers
                         if (line.Contains("data-name"))
                             Towns.Add(ConvertToObject(line));
                 }
-            
+
                 fileReader.Close();
                 fileReader.Dispose();
             }
             JsonContent = JsonConvert.SerializeObject(Towns).Trim().TrimEnd().TrimStart();
+            Console.WriteLine("CINEVO TOWN SCRAPPER: JsconContent added...");
+            Console.WriteLine("CINEVO TOWN SCRAPPER: " + JsonContent.Substring(0, 50));
         }
 
         private Town ConvertToObject(string lineHtml)
@@ -98,11 +101,11 @@ namespace CinevoScrapper.Scrappers
                 var town = new Town
                 {
                     Id = CinevoStrings.GetChunk(lineHtml, "value=\"", "data-name", "\""),
-                    Name = CinevoStrings.GetChunk(lineHtml, "/\">", "</a>"),
+                  Name = CinevoStrings.GetChunk(lineHtml, "/\">", "</a>"),
                     Tag = CinevoStrings.GetChunk(lineHtml, "data-name=\"", "\" >"),
                     Url = CinevoStrings.GetChunk(lineHtml, "<a href=\"", "\">")
                 };
-                return town;
+              return town;
             }
             catch (Exception ex)
             {

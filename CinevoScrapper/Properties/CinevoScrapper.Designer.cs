@@ -25,37 +25,19 @@ namespace CinevoScrapper.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\TownScrapper\\")]
-        public string TownScrapper {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\TownsAndCinemas\\")]
+        public string PathTownsCinemas {
             get {
-                return ((string)(this["TownScrapper"]));
+                return ((string)(this["PathTownsCinemas"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\TownScrapper\\Processed")]
-        public string TownScrapperProcessed {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\TownsAndCinemas\\Processed")]
+        public string PathTownsCinemaProcessed {
             get {
-                return ((string)(this["TownScrapperProcessed"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\CinemaScrapper\\")]
-        public string CinemaScrapper {
-            get {
-                return ((string)(this["CinemaScrapper"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\CinemaScrapper\\Processed")]
-        public string CinemaScrapperProcessed {
-            get {
-                return ((string)(this["CinemaScrapperProcessed"]));
+                return ((string)(this["PathTownsCinemaProcessed"]));
             }
         }
         
@@ -65,6 +47,33 @@ namespace CinevoScrapper.Properties {
         public bool CleanDirectories {
             get {
                 return ((bool)(this["CleanDirectories"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsTestEnvironment {
+            get {
+                return ((bool)(this["IsTestEnvironment"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\FilmScrapper\\")]
+        public string PathFilmCinema {
+            get {
+                return ((string)(this["PathFilmCinema"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\FilmScrapper\\Processed")]
+        public string PathFimlCinemaProcessed {
+            get {
+                return ((string)(this["PathFimlCinemaProcessed"]));
             }
         }
     }

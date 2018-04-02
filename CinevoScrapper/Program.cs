@@ -10,19 +10,25 @@ namespace CinevoScrapper
     {
         private static void Main(string[] args)
         {
-            IScrapperTown townsPage = new TownScrapper
+
+            IScrapperCinema cinemasPage = new CinemaScrapper
             {
-                Path = Properties.CinevoScrapper.Default.TownScrapper,
-                PathProcessed = Properties.CinevoScrapper.Default.TownScrapperProcessed,
+                Path = Properties.CinevoScrapper.Default.PathTownsCinemas,
+                PathProcessed = Properties.CinevoScrapper.Default.PathTownsCinemaProcessed,
                 Url = "https://cartelera.elperiodico.com/cines/",
-                ForceRequest = true
+                ForceRequest = !Properties.CinevoScrapper.Default.IsTestEnvironment
             };
 
             try
             {
-                var webScrapper = new WebScrapper(townsPage);
+                var webScrapper = new WebScrapper(cinemasPage);
                 if (Properties.CinevoScrapper.Default.CleanDirectories)
                     webScrapper.CleanFiles();
+
+                foreach (Cinema cinema in cinemasPage.Cinemas)
+                {
+                    
+                }
             }
             catch (Exception e)
             {

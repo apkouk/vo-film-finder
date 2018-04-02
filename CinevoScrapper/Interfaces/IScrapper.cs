@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using CinevoScrapper.Models;
-
-namespace CinevoScrapper.Interfaces
+﻿namespace CinevoScrapper.Interfaces
 {
     public interface IScrapper 
     {
-        string Url { get; set; }
-        string HtmlContent { get; set; }
-        string JsonContent { get; set; }
-        string Path { get; set; }
-        string PathProcessed { get; set; }
-        bool ForceRequest { get; set; }
+        string JsonContent { get; }
+        string Path { get; }
+        string PathProcessed { get; }
 
         bool HasChanged();
         void GetHtmlFromUrl();

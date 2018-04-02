@@ -6,13 +6,13 @@ namespace CinevoScrapper.Classes
 {
     public class WebScrapper
     {
+        public IScrapper Page { get; set; }
+
         public WebScrapper(IScrapper page)
         {
             Page = page;
             Console.WriteLine(page.HasChanged() ? "TO EXECUTE COMPARISION WITH DATABASE" : "NOTHING TO DO, GRAB A BEER!");
         }
-
-        public IScrapper Page { get; set; }
 
         public void CleanFiles()
         {

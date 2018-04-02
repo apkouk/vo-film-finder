@@ -65,14 +65,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IScrapperCinema.cs" />
+    <Compile Include="Interfaces\IScrapperCinemaFilms.cs" />
+    <Compile Include="Interfaces\IScrapperFilm.cs" />
     <Compile Include="Interfaces\IScrapperTown.cs" />
+    <Compile Include="Models\Time.cs" />
     <Compile Include="Properties\CinevoScrapper.cs" />
     <Compile Include="Properties\CinevoScrapper.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>CinevoScrapper.settings</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CinevoMongoDB.cs" />
     <Compile Include="Models\Cinema.cs" />
     <Compile Include="Helpers\CinevoEnums.cs" />
     <Compile Include="Helpers\CinevoFiles.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Models\Town.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scrappers\CinemaFilmsScrapper.cs" />
     <Compile Include="Scrappers\CinemaScrapper.cs" />
     <Compile Include="Scrappers\FilmScrapper.cs" />
     <Compile Include="Scrappers\TownScrapper.cs" />
@@ -99,13 +102,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HtmlFiles\CinemaScrapper\" />
-    <Folder Include="HtmlFiles\FilmScrapper\" />
+    <Folder Include="HtmlFiles\FilmScrapper\Processed\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HtmlFiles\TownScrapper\Processed\Towns_636580465684351233.html" />
+    <Content Include="HtmlFiles\TownsAndCinemas\Processed\Town_636582400563688154.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

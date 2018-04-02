@@ -11,7 +11,7 @@ namespace CinevoScrapper.Helpers
         {
             //Move time sleeping in appconfig
             Thread.Sleep(2000);
-            Console.WriteLine("Executing request to " + url);
+            Console.WriteLine("CINEVO REQUEST: Executing request to " + url);
             var request = WebRequest.Create(url);
             request.Method = "GET";
             var response = request.GetResponse();
@@ -22,8 +22,11 @@ namespace CinevoScrapper.Helpers
                 var content = reader.ReadToEnd();
                 reader.Close();
                 response.Close();
+                Console.WriteLine("CINEVO REQUEST: Content added...");
+                Console.WriteLine("CINEVO REQUEST: " + content.Substring(0,100));
                 return content;
             }
+            Console.WriteLine("NO CONTENT");
             return "NO CONTENT";
         }
     }

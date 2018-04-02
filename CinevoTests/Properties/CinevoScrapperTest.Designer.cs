@@ -68,15 +68,21 @@ namespace CinevoTests.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://cartelera.elperiodico.com/cines/")]
         public string UrlTowns {
             get {
                 return ((string)(this["UrlTowns"]));
             }
-            set {
-                this["UrlTowns"] = value;
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\Resources")]
+        public string Temporal {
+            get {
+                return ((string)(this["Temporal"]));
             }
         }
     }
