@@ -58,7 +58,7 @@ namespace CinevoTests
         }
 
         [TestMethod]
-        public void Should_return_return_a_list_of_towns()
+        public void Should_return_return_a_list_of_cinemas()
         {
             IScrapperCinema cinemasPage = EqualObjets();
             var webScrapper = new WebScrapper(cinemasPage);

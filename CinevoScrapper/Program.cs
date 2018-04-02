@@ -10,7 +10,6 @@ namespace CinevoScrapper
     {
         private static void Main(string[] args)
         {
-
             IScrapperTown townsPage = new TownScrapper
             {
                 Path = Properties.CinevoScrapper.Default.TownScrapper,
@@ -30,9 +29,6 @@ namespace CinevoScrapper
                 Console.WriteLine(e);
                 throw;
             }
-
-
-            
             Console.ReadLine();
         }
     }

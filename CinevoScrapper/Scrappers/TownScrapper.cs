@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using static CinevoScrapper.Helpers.CinevoEnums;
+
 
 namespace CinevoScrapper.Scrappers
 {
@@ -36,7 +36,7 @@ namespace CinevoScrapper.Scrappers
                     OldFilePath = PathProcessed,
                     Path = Path,
                     HasChanged = false,
-                    Type = PageTypes.Town
+                    Type = CinevoEnums.PageTypes.Town
                 };
 
                 file.MakeComparision();
@@ -56,7 +56,7 @@ namespace CinevoScrapper.Scrappers
                 if (ForceRequest)
                 {
                     HtmlContent = CinevoRequests.GetContent(Url).Trim().TrimEnd().TrimStart();
-                    CinevoFiles.SaveToFile(Path, PageTypes.Town.ToString(), "html", HtmlContent);
+                    CinevoFiles.SaveToFile(Path, CinevoEnums.PageTypes.Town.ToString(), "html", HtmlContent);
                 }
             }
             catch (Exception ex)

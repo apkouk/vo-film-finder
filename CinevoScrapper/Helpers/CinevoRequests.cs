@@ -16,11 +16,15 @@ namespace CinevoScrapper.Helpers
             request.Method = "GET";
             var response = request.GetResponse();
             var stream = response.GetResponseStream();
-            var reader = new StreamReader(stream ?? throw new InvalidOperationException());
-            var content = reader.ReadToEnd();
-            reader.Close();
-            response.Close();
-            return content;
+            if (stream != null)
+            {
+                var reader = new StreamReader(stream);
+                var content = reader.ReadToEnd();
+                reader.Close();
+                response.Close();
+                return content;
+            }
+            return "NO CONTENT";
         }
     }
 }
