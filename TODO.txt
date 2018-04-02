@@ -1,0 +1,24 @@
+------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------     CINEVO     -----------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+GENERAL
+- We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
+- Process to get just the differences between jsons/collections
+
+
+ERROR HANDLING
+- Immprove error helper
+- Add try/catch wherever they needed
+
+
+DATABASE
+- Make mongoDb in local and develop on it
+- Move mongoDB to cluster online
+
+
+INVESTIGATE
+- Find out why the test for checking that two file are equal get considerably more time thant the others
+
+
