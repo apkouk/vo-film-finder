@@ -118,6 +118,11 @@ namespace CinevoScrapper.Scrappers
             Console.WriteLine("CINEVO CINEMA FILES SCRAPPER: " + JsonContent.Substring(0, 50));
         }
 
+        public bool SaveToDb()
+        {
+            throw new NotImplementedException();
+        }
+
         private Film ConvertToObject(ArrayList linesPerCinema)
         {
             try

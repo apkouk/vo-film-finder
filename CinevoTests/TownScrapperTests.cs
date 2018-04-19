@@ -63,5 +63,14 @@ namespace CinevoTests
             Assert.IsTrue(townsPage.Towns.Count > 5);
         }
 
+        [TestMethod]
+        public void Should_save_all_towns_in_db()
+        {
+            IScrapperTown townsPage = EqualObjets();
+            var webScrapper = new WebScrapper(townsPage);
+            townsPage.SaveToDb();
+            Assert.IsTrue(townsPage.SaveToDb());
+        }
+
     }
 }

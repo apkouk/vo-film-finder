@@ -18,10 +18,11 @@ namespace CinevoScrapper.Scrappers
         public bool ForceRequest { get; set; }
         public string Path { get; set; }
         public string PathProcessed { get; set; }
+        public bool HasChanged { get; set; }
         public List<Cinema> Cinemas { get; set; }
         public bool FindFilms { get; set; }
 
-        public bool HasChanged()
+        bool IScrapper.HasChanged()
         {
             try
             {
@@ -42,7 +43,8 @@ namespace CinevoScrapper.Scrappers
 
                 file.MakeComparision();
                 Console.WriteLine("CINEVO CINEMA SCRAPPER: Has content changed? => " + file.HasChanged);
-                return file.HasChanged;
+                HasChanged = file.HasChanged;
+                return HasChanged;
             }
             catch (Exception ex)
             {
@@ -69,26 +71,16 @@ namespace CinevoScrapper.Scrappers
 
         public void GetContentInJson(string path)
         {
-            //if (HtmlContent == null)
-            //    path = Properties.CinevoScrapper.Default.PathTownsCinemaProcessed;
-
             JsonContent = "NO CONTENT";
             var addLine = false;
+            string getLastHtmlFullName = CinevoFiles.GetLastHtmlPath(path);
 
-            string getLastHtmlPath = string.Empty;
-            DirectoryInfo di = new DirectoryInfo(path);
-            if (di.GetFileSystemInfos().OrderByDescending(x => x.LastWriteTime).FirstOrDefault() != null)
+            if (getLastHtmlFullName != null && !getLastHtmlFullName.Equals(string.Empty))
             {
-                getLastHtmlPath = di.GetFiles().OrderByDescending(x => x.LastWriteTime).FirstOrDefault()?.FullName;
-            }
-
-
-            if (getLastHtmlPath != null && !getLastHtmlPath.Equals(string.Empty))
-            {
-                var fileReader = new StreamReader(getLastHtmlPath);
-
-                var linesPerCinema = new ArrayList();
                 Cinemas = new List<Cinema>();
+                var linesPerCinema = new ArrayList();
+                var fileReader = new StreamReader(getLastHtmlFullName);
+                
                 string line;
                 var counter = 0;
                 var cinemaAdded = 2;
@@ -125,10 +117,20 @@ namespace CinevoScrapper.Scrappers
                 fileReader.Close();
                 fileReader.Dispose();
                 JsonContent = JsonConvert.SerializeObject(Cinemas).Trim().TrimEnd().TrimStart();
+                Console.WriteLine("CINEVO CINEMA SCRAPPER: JsconContent added...");
+                Console.WriteLine("CINEVO CINEMA SCRAPPER: " + JsonContent.Substring(0, 50));
             }
+        }
 
-            Console.WriteLine("CINEVO CINEMA SCRAPPER: JsconContent added...");
-            Console.WriteLine("CINEVO CINEMA SCRAPPER: " + JsonContent.Substring(0, 50));
+        public bool SaveToDb()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private string GetLastHtmlFile()
+        {
+            throw new NotImplementedException();
         }
 
         private Cinema ConvertToObject(ArrayList linesPerCinema)

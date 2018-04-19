@@ -9,5 +9,6 @@
         bool HasChanged();
         void GetHtmlFromUrl();
         void GetContentInJson(string path);
+        bool SaveToDb();
     }
 }

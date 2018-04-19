@@ -18,6 +18,7 @@ namespace CinevoScrapper.Scrappers
         public bool ForceRequest { get; set; }
         public string Path { get; set; }
         public string PathProcessed { get; set; }
+        public bool HasChanged { get; set; }
         public List<Town> Towns { get; set; }
 
         bool IScrapper.HasChanged()
@@ -41,7 +42,8 @@ namespace CinevoScrapper.Scrappers
 
                 file.MakeComparision();
                 Console.WriteLine("CINEVO TOWN SCRAPPER: Has content changed? => " + file.HasChanged);
-                return file.HasChanged;
+                HasChanged = file.HasChanged;
+                return HasChanged;
             }
             catch (Exception ex)
             {
@@ -68,14 +70,16 @@ namespace CinevoScrapper.Scrappers
 
         public void GetContentInJson(string path)
         {
+            JsonContent = "NO CONTENT";
             var addLine = false;
-            if (Directory.GetFiles(path).Select(x => x.EndsWith(".html")).Count() == 1)
+            string getLastHtmlFullName = CinevoFiles.GetLastHtmlPath(path);
+
+            if (getLastHtmlFullName != null && !getLastHtmlFullName.Equals(string.Empty))
             {
-                var filePath = Directory.GetFiles(path)[0];
-                var fileReader = new StreamReader(filePath);
+                Towns = new List<Town>();
+                var fileReader = new StreamReader(getLastHtmlFullName);
 
                 string line;
-                Towns = new List<Town>();
                 while ((line = fileReader.ReadLine()) != null)
                 {
                     if (line.Contains("</select>")) break;
@@ -94,6 +98,15 @@ namespace CinevoScrapper.Scrappers
             Console.WriteLine("CINEVO TOWN SCRAPPER: " + JsonContent.Substring(0, 50));
         }
 
+        public bool SaveToDb()
+        {
+            if (HasChanged)
+            {
+
+            }
+            return false;
+        }
+
         private Town ConvertToObject(string lineHtml)
         {
             try
@@ -101,11 +114,11 @@ namespace CinevoScrapper.Scrappers
                 var town = new Town
                 {
                     Id = CinevoStrings.GetChunk(lineHtml, "value=\"", "data-name", "\""),
-                  Name = CinevoStrings.GetChunk(lineHtml, "/\">", "</a>"),
+                    Name = CinevoStrings.GetChunk(lineHtml, "/\">", "</a>"),
                     Tag = CinevoStrings.GetChunk(lineHtml, "data-name=\"", "\" >"),
                     Url = CinevoStrings.GetChunk(lineHtml, "<a href=\"", "\">")
                 };
-              return town;
+                return town;
             }
             catch (Exception ex)
             {

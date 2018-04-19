@@ -12,14 +12,14 @@ namespace CinevoTests
         readonly string content = "TESTING CONTENT";
 
         [TestMethod]
-        public void A_Shoud_save_a_file()
+        public void Shoud_save_a_file()
         {
             CinevoFiles.SaveToFile(path, CinevoEnums.PageTypes.Town.ToString(), extension, content);
             Assert.IsTrue(Directory.GetFiles(path)[0].Contains(CinevoEnums.PageTypes.Town.ToString()));
         }
 
         [TestMethod]
-        public void B_Shoud_delete_a_file()
+        public void Shoud_delete_a_file()
         {
             CinevoFiles.DeleteAllFiles(path);
             string[] files = Directory.GetFiles(path);

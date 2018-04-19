@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Scrappers;
 
@@ -12,11 +13,6 @@ namespace CinevoScrapper.Helpers
         public string Path { get; set; }
         public bool HasChanged { get; set; }
         public CinevoEnums.PageTypes Type { get; set; }
-
-        public CinevoFiles()
-        {
-            
-        }
 
         public static void SaveToFile(string path, string fileName, string extension, string content)
         {
@@ -51,15 +47,31 @@ namespace CinevoScrapper.Helpers
                         IScrapperTown townComparer = new TownScrapper();
                         townComparer.GetContentInJson(OldFilePath);
                         HasChanged = !Scrapper.JsonContent.Equals(townComparer.JsonContent);
+                        Scrapper.SaveToDb();
                         break;
                     case CinevoEnums.PageTypes.Cinema:
                         IScrapperCinema cinemaComparer = new CinemaScrapper();
                         cinemaComparer.GetContentInJson(OldFilePath);
                         HasChanged = !Scrapper.JsonContent.Equals(cinemaComparer.JsonContent);
+                        Scrapper.SaveToDb();
                         break;
                 }
+
+
                 Console.WriteLine("CINEVO FILES: " + Type.ToString() + " comparision done");
             }
+        }
+
+    
+
+        public static string GetLastHtmlPath(string path)
+        {
+            DirectoryInfo di = new DirectoryInfo(path);
+            if (di.GetFileSystemInfos().OrderByDescending(x => x.LastWriteTime).FirstOrDefault() != null)
+            {
+                return di.GetFiles().OrderByDescending(x => x.LastWriteTime).FirstOrDefault()?.FullName;
+            }
+            return string.Empty;
         }
     }
 }

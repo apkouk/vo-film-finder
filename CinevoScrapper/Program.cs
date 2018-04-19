@@ -27,7 +27,16 @@ namespace CinevoScrapper
 
                 foreach (Cinema cinema in cinemasPage.Cinemas)
                 {
-                    
+                    IScrapperCinemaFilms scrapperCinemaFilms = new CinemaFilmsScrapper
+                    {
+                        Path = Properties.CinevoScrapper.Default.PathFilmCinema,
+                        PathProcessed = Properties.CinevoScrapper.Default.PathFimlCinemaProcessed,
+                        ForceRequest = !Properties.CinevoScrapper.Default.IsTestEnvironment
+                    };
+
+                    //var webScrapper = new WebScrapper(cinemasPage);
+                    //if (Properties.CinevoScrapper.Default.CleanDirectories)
+                    //    webScrapper.CleanFiles();
                 }
             }
             catch (Exception e)
