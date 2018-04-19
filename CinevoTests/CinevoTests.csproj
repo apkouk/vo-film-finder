@@ -59,7 +59,6 @@
     </Compile>
     <Compile Include="CinemaScrapperTests.cs" />
     <Compile Include="HelpersTest.cs" />
-    <Compile Include="FilmScrapperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Analitica\testCoverage.dcvr" />

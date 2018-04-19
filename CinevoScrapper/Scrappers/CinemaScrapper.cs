@@ -69,8 +69,8 @@ namespace CinevoScrapper.Scrappers
 
         public void GetContentInJson(string path)
         {
-            if (HtmlContent == null)
-                path = Properties.CinevoScrapper.Default.PathTownsCinemaProcessed;
+            //if (HtmlContent == null)
+            //    path = Properties.CinevoScrapper.Default.PathTownsCinemaProcessed;
 
             JsonContent = "NO CONTENT";
             var addLine = false;
@@ -79,7 +79,7 @@ namespace CinevoScrapper.Scrappers
             DirectoryInfo di = new DirectoryInfo(path);
             if (di.GetFileSystemInfos().OrderByDescending(x => x.LastWriteTime).FirstOrDefault() != null)
             {
-                getLastHtmlPath = di.GetFileSystemInfos().OrderByDescending(x => x.LastWriteTime).FirstOrDefault()?.FullName;
+                getLastHtmlPath = di.GetFiles().OrderByDescending(x => x.LastWriteTime).FirstOrDefault()?.FullName;
             }
 
 

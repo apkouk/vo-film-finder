@@ -25,7 +25,7 @@ namespace CinevoTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual")]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual\\")]
         public string EqualFilesDownloaded {
             get {
                 return ((string)(this["EqualFilesDownloaded"]));

@@ -2,11 +2,14 @@
 ---------------------------------------------------------     CINEVO     -----------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------
 
+DOING NOW
+We are scrapping every cinema page to get their films and its times -> That´s the reason their test don't work
 Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
 
 GENERAL
 - We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
 - Process to get just the differences between jsons/collections
+- Copy HtmlFiles folder from scrapper to test solution every time we build
 
 DATABASE
 - Make mongoDb in local and develop on it
@@ -41,6 +44,8 @@ INVESTIGATE
 ADDINGS
 - We are reading the html file twice to get town and cinemas data. We can make it doing it once, it's the same file (not important for now)
 - Show cinemas near me wiht original version films on map
+- Add you original version film
+- Update data randomly (add system configuration)
 
 FRONTEND
 - In React :)
