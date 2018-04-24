@@ -1,4 +1,6 @@
-﻿using CinevoScrapper.Classes;
+﻿using System;
+using System.Threading.Tasks;
+using CinevoScrapper.Classes;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Scrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -66,9 +68,8 @@ namespace CinevoTests
         [TestMethod]
         public void Should_save_all_towns_in_db()
         {
-            IScrapperTown townsPage = EqualObjets();
+            IScrapperTown townsPage = DiffObjets();
             var webScrapper = new WebScrapper(townsPage);
-            townsPage.SaveToDb();
             Assert.IsTrue(townsPage.SaveToDb());
         }
 

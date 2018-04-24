@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CinevoScrapper.Scrappers
@@ -101,9 +102,7 @@ namespace CinevoScrapper.Scrappers
         public bool SaveToDb()
         {
             if (HasChanged)
-            {
-
-            }
+                return CinevoMongoDb.SaveTownsInDd(Towns);
             return false;
         }
 
@@ -126,5 +125,6 @@ namespace CinevoScrapper.Scrappers
                 return null;
             }
         }
+
     }
 }

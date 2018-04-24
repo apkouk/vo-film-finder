@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CinevoScrapper.Helpers;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
@@ -154,5 +155,7 @@ namespace CinevoScrapper.Scrappers
                 return null;
             }
         }
+
+      
     }
 }
