@@ -47,13 +47,13 @@ namespace CinevoScrapper.Helpers
                         IScrapperTown townComparer = new TownScrapper();
                         townComparer.GetContentInJson(OldFilePath);
                         HasChanged = !Scrapper.JsonContent.Equals(townComparer.JsonContent);
-                        Scrapper.SaveToDb();
+                        //Scrapper.SaveToDbAsync();
                         break;
                     case CinevoEnums.PageTypes.Cinema:
                         IScrapperCinema cinemaComparer = new CinemaScrapper();
                         cinemaComparer.GetContentInJson(OldFilePath);
                         HasChanged = !Scrapper.JsonContent.Equals(cinemaComparer.JsonContent);
-                        Scrapper.SaveToDb();
+                        //Scrapper.SaveToDbAsync();
                         break;
                 }
 

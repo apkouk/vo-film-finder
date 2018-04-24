@@ -1,4 +1,6 @@
-﻿namespace CinevoScrapper.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace CinevoScrapper.Interfaces
 {
     public interface IScrapper 
     {

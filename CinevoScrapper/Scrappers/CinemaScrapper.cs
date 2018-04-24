@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CinevoScrapper.Helpers;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
@@ -127,12 +128,6 @@ namespace CinevoScrapper.Scrappers
             throw new NotImplementedException();
         }
 
-
-        private string GetLastHtmlFile()
-        {
-            throw new NotImplementedException();
-        }
-
         private Cinema ConvertToObject(ArrayList linesPerCinema)
         {
             try
@@ -164,5 +159,7 @@ namespace CinevoScrapper.Scrappers
                 return null;
             }
         }
+
+       
     }
 }
