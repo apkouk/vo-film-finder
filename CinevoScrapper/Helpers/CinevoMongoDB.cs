@@ -32,7 +32,7 @@ namespace CinevoScrapper.Helpers
                 foreach (Town obj in towns)
                 {
                     var document = new BsonDocument
-                    { 
+                    {
                         {"Id", obj.Id},
                         {"Name", obj.Name},
                         {"Tag", obj.Tag},
@@ -40,7 +40,7 @@ namespace CinevoScrapper.Helpers
                     };
                     bsons.Add(document);
                 }
-             
+
                 collection.InsertManyAsync(bsons.AsEnumerable()).Wait();
                 var count = collection.AsQueryable().Count();
                 return towns.Count == count;
@@ -50,6 +50,38 @@ namespace CinevoScrapper.Helpers
                 Console.WriteLine(e);
                 return false;
             }
+        }
+
+        public static bool SaveCinemasInDd(List<Cinema> cinemas)
+        {
+            var connectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
+            var client = new MongoClient(connectionString);
+            IMongoDatabase db = client.GetDatabase("cinevo");
+            db.DropCollection("Cinemas");
+            db.CreateCollection("Cinemas");
+            var collection = db.GetCollection<BsonDocument>("Cinemas");
+
+            List<BsonDocument> bsons = new List<BsonDocument>();
+
+            foreach (Cinema obj in cinemas)
+            {
+                var document = new BsonDocument
+                {
+                    {"Id", obj.CinemaId ?? string.Empty},
+                    {"Name", obj.Name ?? string.Empty},
+                    {"Tag", obj.Tag ?? string.Empty},
+                    {"Address", obj.Address ?? string.Empty},
+                    {"Telephone", obj.Telephone ?? string.Empty},
+                    {"Url", obj.Url ?? string.Empty},
+                    {"TownId", obj.TownId ?? string.Empty},
+                    {"Town", obj.Town ?? string.Empty}
+                };
+                bsons.Add(document);
+            }
+
+            collection.InsertManyAsync(bsons.AsEnumerable()).Wait();
+            var count = collection.AsQueryable().Count();
+            return cinemas.Count == count;
         }
     }
 }

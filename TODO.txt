@@ -8,7 +8,7 @@ Refract GetJsonContent method
 
 GENERAL
 - We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
-Make parameter shorte (the Default thing is ugly)
+Make parameters shorter (the Default thing is ugly)
 How to download images c# :)
 Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
 - Process to get just the differences between jsons/collections
