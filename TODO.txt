@@ -5,22 +5,18 @@
 DOING NOW
 We are scrapping every cinema page to get their films and its times
 Refract GetJsonContent method
-Make parameter shorte (the Default thing is ugly)
-How to download images c# :)
-Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
 
 GENERAL
 - We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
+Make parameters shorter (the Default thing is ugly)
+How to download images c# :)
+Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
 - Process to get just the differences between jsons/collections
 - Copy HtmlFiles folder from scrapper to test solution every time we build
 
 DATABASE
-- Make mongoDb in local and develop on it
-- Move mongoDB to cluster online
 - One document with all tonws, every town will have a collection of cinemas and every cinema will have a collection of films with a collection of showings
 - Make one document for old date and another one for the new data, much easier to compare data and make inserts/deletes
-
-
 
 APIS
 - Will make an api using WebApi (.net) to get films info on demmand
@@ -30,16 +26,9 @@ APIS
 ACCOUNT
 - Everything to do 
 
-TESTING
-66% of coverage test :) Really happy!!
-Use that tool to make it even better
-
 ERROR HANDLING
 - Immprove error helper
 - Add try/catch wherever they needed
-
-GIT
-- Start using branches
 
 INVESTIGATE
 - Find out why the test for checking that two file are equal get considerably more time thant the others

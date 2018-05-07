@@ -65,7 +65,13 @@ namespace CinevoTests
             Console.WriteLine("CINEVO TESTS: " + cinemasPage.Cinemas.Count + " cinemas found");
             Assert.IsTrue(cinemasPage.Cinemas.Count > 5);
         }
-
+        [TestMethod]
+        public void Should_save_all_cinemas_in_db()
+        {
+            IScrapperCinema cinemasPage = DiffObjets();
+            var webScrapper = new WebScrapper(cinemasPage);
+            Assert.IsTrue(cinemasPage.SaveToDb());
+        }
 
     }
 }

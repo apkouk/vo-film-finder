@@ -102,7 +102,9 @@ namespace CinevoScrapper.Scrappers
                         if (addLine)
                             if (counter - cinemaAdded == 0)
                             {
-                                Cinemas.Add(ConvertToObject(linesPerCinema));
+                                Cinema cinema = ConvertToObject(linesPerCinema);
+                                if(cinema.Name != null)
+                                    Cinemas.Add(cinema);                                
                                 counter = 0;
                                 cinemaAdded = 1;
                                 linesPerCinema.Clear();
@@ -125,7 +127,9 @@ namespace CinevoScrapper.Scrappers
 
         public bool SaveToDb()
         {
-            throw new NotImplementedException();
+            if (HasChanged)
+                return CinevoMongoDb.SaveCinemasInDd(Cinemas);
+            return false;
         }
 
         private Cinema ConvertToObject(ArrayList linesPerCinema)
@@ -133,6 +137,7 @@ namespace CinevoScrapper.Scrappers
             try
             {
                 var cinema = new Cinema();
+                cinema.CinemaId = Guid.NewGuid().ToString();
                 foreach (string lineHtml in linesPerCinema)
                 {
                     if (lineHtml.Contains("col-xs-12 col-sm-6 col-md-6 info-cine"))
@@ -143,13 +148,12 @@ namespace CinevoScrapper.Scrappers
                         cinema.Url = CinevoStrings.GetChunk(lineHtml, "href=\"", "\">");
                         cinema.Tag = cinema.Name.ToLower().Replace(' ', '-');
                     }
-
-                    if (lineHtml.EndsWith("</p>") && cinema.Address != null)
-                        cinema.Town = lineHtml.Replace(" ", "").Replace("</p>", "");
-                    if (lineHtml.Contains("DIRECCIÓN"))
-                        cinema.Address = CinevoStrings.GetChunk(lineHtml, "</strong>", "</p>").TrimStart();
                     if (lineHtml.Contains("TEL"))
                         cinema.Telephone = CinevoStrings.GetChunk(lineHtml, "</strong>", "</p>").TrimStart();
+                    if (lineHtml.Contains("DIRECCIÓN"))
+                        cinema.Address = CinevoStrings.GetChunk(lineHtml, "</strong>", "</p>").TrimStart();
+                    if (lineHtml.EndsWith("</p>") && cinema.Address != null)
+                        cinema.Town = lineHtml.Replace("</p>", "");
                 }
                 return cinema;
             }
