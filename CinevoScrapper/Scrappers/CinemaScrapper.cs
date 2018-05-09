@@ -13,6 +13,7 @@ namespace CinevoScrapper.Scrappers
 {
     public class CinemaScrapper : IScrapperCinema
     {
+        private int count = 1;
         public string Url { get; set; }
         public string HtmlContent { get; set; }
         public string JsonContent { get; set; }
@@ -137,7 +138,7 @@ namespace CinevoScrapper.Scrappers
             try
             {
                 var cinema = new Cinema();
-                cinema.CinemaId = Guid.NewGuid().ToString();
+                cinema.CinemaId = count++.ToString();
                 foreach (string lineHtml in linesPerCinema)
                 {
                     if (lineHtml.Contains("col-xs-12 col-sm-6 col-md-6 info-cine"))
@@ -163,7 +164,5 @@ namespace CinevoScrapper.Scrappers
                 return null;
             }
         }
-
-       
     }
 }
