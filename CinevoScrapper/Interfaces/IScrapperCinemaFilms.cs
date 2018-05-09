@@ -3,7 +3,7 @@ using CinevoScrapper.Models;
 
 namespace CinevoScrapper.Interfaces
 {
-    public interface IScrapperCinemaFilms : IScrapper
+    public interface IScrapperFilms : IScrapper
     {
         List<Film> Films { get; set; }
     }

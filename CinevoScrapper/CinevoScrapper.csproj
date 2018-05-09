@@ -76,14 +76,12 @@
     <Compile Include="Helpers\CinevoRequests.cs" />
     <Compile Include="Interfaces\IScrapper.cs" />
     <Compile Include="Helpers\CinevoStrings.cs" />
-    <Compile Include="Classes\WebScrapper.cs" />
     <Compile Include="Interfaces\IError.cs" />
     <Compile Include="Classes\Error.cs" />
     <Compile Include="Models\Film.cs" />
     <Compile Include="Models\Town.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scrappers\CinemaFilmsScrapper.cs" />
     <Compile Include="Scrappers\CinemaScrapper.cs" />
     <Compile Include="Scrappers\FilmScrapper.cs" />
     <Compile Include="Scrappers\TownScrapper.cs" />

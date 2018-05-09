@@ -6,9 +6,15 @@ namespace CinevoScrapper.Classes
 {
     public class WebScrapper
     {
-        public IScrapper Page { get; set; }
+        public IScrapper Page { get; }
+        
+        public WebScrapper(IScrapperTown page)
+        {
+            Page = page;
+            Console.WriteLine(page.HasChanged() ? "TO EXECUTE COMPARISION WITH DATABASE" : "NOTHING TO DO, GRAB A BEER!");
+        }
 
-        public WebScrapper(IScrapper page)
+        public WebScrapper(IScrapperCinema page)
         {
             Page = page;
             Console.WriteLine(page.HasChanged() ? "TO EXECUTE COMPARISION WITH DATABASE" : "NOTHING TO DO, GRAB A BEER!");
@@ -16,12 +22,7 @@ namespace CinevoScrapper.Classes
 
         public void CleanFiles()
         {
-            var oldFile = Directory.GetFiles(Page.PathProcessed)[0];
-            var newFile = Directory.GetFiles(Page.Path)[0];
-
-            var fileName = Directory.GetFiles(Page.Path)[0].Substring(newFile.LastIndexOf("\\", StringComparison.Ordinal) + 1);
-            File.Delete(oldFile);
-            File.Move(newFile, Page.PathProcessed + "\\" + fileName);
+       
         }
     }
 }

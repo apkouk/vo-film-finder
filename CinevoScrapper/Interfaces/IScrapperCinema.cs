@@ -3,8 +3,9 @@ using CinevoScrapper.Models;
 
 namespace CinevoScrapper.Interfaces
 {
-    public interface IScrapperCinema: IScrapper
+    public interface IScrapperCinema: IScrapper 
     {
+        bool HasChanged();
         List<Cinema> Cinemas { get; set; }
     }
 }

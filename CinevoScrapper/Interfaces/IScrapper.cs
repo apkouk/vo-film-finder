@@ -7,8 +7,7 @@ namespace CinevoScrapper.Interfaces
         string JsonContent { get; }
         string Path { get; }
         string PathProcessed { get; }
-
-        bool HasChanged();
+      
         void GetHtmlFromUrl();
         void GetContentInJson(string path);
         bool SaveToDb();

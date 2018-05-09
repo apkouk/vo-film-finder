@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace CinevoScrapper.Scrappers
 {
-    public class CinemaFilmsScrapper : IScrapperCinemaFilms
+    public class CinemaFilmsScrapper : IScrapperFilms
     {
         public string Url { get; set; }
         public string HtmlContent { get; set; }

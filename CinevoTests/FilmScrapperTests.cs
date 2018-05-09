@@ -1,5 +1,4 @@
-﻿using CinevoScrapper.Classes;
-using CinevoScrapper.Interfaces;
+﻿using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
 using CinevoScrapper.Scrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,25 +24,20 @@ namespace CinevoTests
         [TestMethod]
         public void Should_return_a_list_of_films_in_cinema()
         {
-            IScrapperCinema cinemasPage = DiffObjets();
-            var webScrapper = new WebScrapper(cinemasPage);
+            IScrapperCinema cinemas = DiffObjets();
+            cinemas.HasChanged();
 
-            foreach (Cinema cinema in cinemasPage.Cinemas)
+            foreach (Cinema cinema in cinemas.Cinemas)
             {
-                IScrapperCinemaFilms cinemasPageFilms = new CinemaFilmsScrapper
+                IScrapperFilms filmScrapper = new FilmScrapper
                 {
                     Path = Properties.CinevoScrapperTest.Default.DiffFilesDownloaded,
                     PathProcessed = Properties.CinevoScrapperTest.Default.DiffFilesOld,
                     Url = cinema.Url,
+                    Cinema = cinema,
                     ForceRequest = true
                 };
-
-                var webScrapperFilmCinema = new WebScrapper(cinemasPage);
-                webScrapper.Page.HasChanged();
-
             }
-
-            Assert.IsFalse(webScrapper.Page.HasChanged());
         }
     }
 }

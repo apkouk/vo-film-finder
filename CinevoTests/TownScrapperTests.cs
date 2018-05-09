@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using CinevoScrapper.Classes;
-using CinevoScrapper.Interfaces;
+﻿using CinevoScrapper.Interfaces;
 using CinevoScrapper.Scrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -21,7 +18,7 @@ namespace CinevoTests
             };
             return townsPage;
         }
-        private IScrapperTown DiffObjets()
+        private IScrapperTown DiffObjets() 
         {
             IScrapperTown townsPage = new TownScrapper
             {
@@ -36,32 +33,30 @@ namespace CinevoTests
         [TestMethod]
         public void Should_say_that_files_are_equal()
         {
-            IScrapper townsPage = EqualObjets();
-            var webScrapper = new WebScrapper(townsPage);
-            Assert.IsFalse(webScrapper.Page.HasChanged());
+            IScrapperTown townsPage = EqualObjets();
+            Assert.IsFalse(townsPage.HasChanged());
         }
 
         [TestMethod]
         public void Should_say_that_files_are_different()
         {
-            IScrapper townsPage = DiffObjets();
-            var webScrapper = new WebScrapper(townsPage);
-            Assert.IsTrue(webScrapper.Page.HasChanged());
+            IScrapperTown townsPage = DiffObjets();
+            Assert.IsTrue(townsPage.HasChanged());
         }
 
         [TestMethod]
         public void Should_return_json_data()
         {
-            IScrapper townsPage = EqualObjets();
-            var webScrapper = new WebScrapper(townsPage);
-            Assert.IsTrue(webScrapper.Page.JsonContent.Length > 100);
+            IScrapperTown townsPage = EqualObjets();
+            townsPage.HasChanged();
+            Assert.IsTrue(townsPage.JsonContent.Length > 100);
         }
 
         [TestMethod]
         public void Should_return_return_a_list_of_towns()
         {
             IScrapperTown townsPage = EqualObjets();
-            var webScrapper = new WebScrapper(townsPage);
+            townsPage.HasChanged();
             Assert.IsTrue(townsPage.Towns.Count > 5);
         }
 
@@ -69,7 +64,7 @@ namespace CinevoTests
         public void Should_save_all_towns_in_db()
         {
             IScrapperTown townsPage = DiffObjets();
-            var webScrapper = new WebScrapper(townsPage);
+            townsPage.HasChanged();
             Assert.IsTrue(townsPage.SaveToDb());
         }
 

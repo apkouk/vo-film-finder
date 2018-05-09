@@ -22,7 +22,7 @@ namespace CinevoScrapper.Scrappers
         public bool HasChanged { get; set; }
         public List<Town> Towns { get; set; }
 
-        bool IScrapper.HasChanged()
+        bool IScrapperTown.HasChanged()
         {
             try
             {

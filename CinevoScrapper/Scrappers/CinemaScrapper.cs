@@ -24,7 +24,7 @@ namespace CinevoScrapper.Scrappers
         public List<Cinema> Cinemas { get; set; }
         public bool FindFilms { get; set; }
 
-        bool IScrapper.HasChanged()
+        bool IScrapperCinema.HasChanged()
         {
             try
             {

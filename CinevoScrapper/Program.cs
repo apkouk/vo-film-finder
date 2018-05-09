@@ -1,5 +1,5 @@
 ﻿using System;
-using CinevoScrapper.Classes;
+using System.IO;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
 using CinevoScrapper.Scrappers;
@@ -21,13 +21,14 @@ namespace CinevoScrapper
 
             try
             {
-                var webScrapper = new WebScrapper(cinemasPage);
+                cinemasPage.HasChanged();
+                
                 if (Properties.CinevoScrapper.Default.CleanDirectories)
-                    webScrapper.CleanFiles();
+                    CleanFiles(cinemasPage.Path, cinemasPage.PathProcessed);
 
                 foreach (Cinema cinema in cinemasPage.Cinemas)
                 {
-                    IScrapperCinemaFilms scrapperCinemaFilms = new CinemaFilmsScrapper
+                    IScrapperFilms scrapperCinemaFilms = new FilmScrapper
                     {
                         Path = Properties.CinevoScrapper.Default.PathFilmCinema,
                         PathProcessed = Properties.CinevoScrapper.Default.PathFimlCinemaProcessed,
@@ -45,6 +46,21 @@ namespace CinevoScrapper
                 throw;
             }
             Console.ReadLine();
+        }
+
+        private static void CleanFiles(string path, string pathProcessed)
+        {
+            var oldFile = Directory.GetFiles(pathProcessed)[0];
+            var newFile = Directory.GetFiles(path)[0];
+
+            var fileName = Directory.GetFiles(path)[0].Substring(newFile.LastIndexOf("\\", StringComparison.Ordinal) + 1);
+            File.Delete(oldFile);
+            File.Move(newFile, pathProcessed + "\\" + fileName);
+        }
+
+        private static void CleanFiles()
+        {
+        
         }
     }
 }
