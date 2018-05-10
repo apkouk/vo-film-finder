@@ -6,7 +6,7 @@
         {
             Town,
             Cinema,
-            FilmsCinema,
+            Film,
             FilmInfo
         }
         public enum Warning

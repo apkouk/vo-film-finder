@@ -96,7 +96,6 @@ namespace CinevoScrapper.Scrappers
             }
             JsonContent = JsonConvert.SerializeObject(Towns).Trim().TrimEnd().TrimStart();
             Console.WriteLine("CINEVO TOWN SCRAPPER: JsconContent added...");
-            Console.WriteLine("CINEVO TOWN SCRAPPER: " + JsonContent.Substring(0, 50));
         }
 
         public bool SaveToDb()

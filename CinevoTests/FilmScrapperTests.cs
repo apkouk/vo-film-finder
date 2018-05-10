@@ -1,4 +1,5 @@
-﻿using CinevoScrapper.Interfaces;
+﻿using System.Threading;
+using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
 using CinevoScrapper.Scrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,12 +32,14 @@ namespace CinevoTests
             {
                 IScrapperFilms filmScrapper = new FilmScrapper
                 {
-                    Path = Properties.CinevoScrapperTest.Default.DiffFilesDownloaded,
-                    PathProcessed = Properties.CinevoScrapperTest.Default.DiffFilesOld,
+                    Path = Properties.CinevoScrapperTest.Default.Films,
+                    PathProcessed = Properties.CinevoScrapperTest.Default.FilmsOld,
                     Url = cinema.Url,
                     Cinema = cinema,
-                    ForceRequest = true
+                    ForceRequest = false
                 };
+              
+                filmScrapper.GetHtmlFromUrl();
             }
         }
     }

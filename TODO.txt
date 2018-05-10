@@ -2,17 +2,20 @@
 ---------------------------------------------------------     CINEVO     -----------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------
 
-DOING NOW
-We are scrapping every cinema page to get their films and its times
-Refract GetJsonContent method
+DOING NOW => Films in OV on each cinema
+Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
+- We are scrapping every cinema page to get their films and its times
+- We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
+
+
 
 GENERAL
-- We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
+- Refract GetJsonContent method
 - Move all configurations and parameters to mongoDb and create CinevoConfiguration class
-How to download images c# :)
-Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
+- How to download images c# :)
 - Process to get just the differences between jsons/collections
 - Copy HtmlFiles folder from scrapper to test solution every time we build
+- We don´t need to save the html on a file, use objects
 
 DATABASE
 - One document with all tonws, every town will have a collection of cinemas and every cinema will have a collection of films with a collection of showings
@@ -45,7 +48,7 @@ FRONTEND
 		Town, Cinema, Film, Distance
 
 BACKEND
-- Node and express
+- MEARN
 
 INFRASCTRUCTURE
 - The cinevo scrapper will update just once a day while I'm having my laptop on

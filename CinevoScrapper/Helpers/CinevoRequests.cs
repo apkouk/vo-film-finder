@@ -10,7 +10,7 @@ namespace CinevoScrapper.Helpers
         public static string GetContent(string url)
         {
             //Move time sleeping in appconfig
-            Thread.Sleep(2000);
+            Thread.Sleep(RandomMilliseconds());
             Console.WriteLine("CINEVO REQUEST: Executing request to " + url);
             var request = WebRequest.Create(url);
             request.Method = "GET";
@@ -23,11 +23,15 @@ namespace CinevoScrapper.Helpers
                 reader.Close();
                 response.Close();
                 Console.WriteLine("CINEVO REQUEST: Content added...");
-                Console.WriteLine("CINEVO REQUEST: " + content.Substring(0,100));
                 return content;
             }
             Console.WriteLine("NO CONTENT");
             return "NO CONTENT";
+        }
+
+        private static int RandomMilliseconds()
+        {
+            return new Random().Next(2000, 10000);
         }
     }
 }

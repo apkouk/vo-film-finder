@@ -84,6 +84,7 @@
     <Content Include="FilesAreDiff\Old\Old.html" />
     <Content Include="FilesAreEqual\Downloaded.html" />
     <Content Include="FilesAreEqual\Old\Old.html" />
+    <Content Include="pruebas.html" />
     <Content Include="HtmlFiles\TownsAndCinemas\Processed\Town_636582400563688154.html" />
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HtmlFiles\FilmScrapper\Processed\" />
+    <Folder Include="HtmlFiles\Films\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

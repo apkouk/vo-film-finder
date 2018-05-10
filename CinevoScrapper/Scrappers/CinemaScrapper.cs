@@ -122,7 +122,6 @@ namespace CinevoScrapper.Scrappers
                 fileReader.Dispose();
                 JsonContent = JsonConvert.SerializeObject(Cinemas).Trim().TrimEnd().TrimStart();
                 Console.WriteLine("CINEVO CINEMA SCRAPPER: JsconContent added...");
-                Console.WriteLine("CINEVO CINEMA SCRAPPER: " + JsonContent.Substring(0, 50));
             }
         }
 

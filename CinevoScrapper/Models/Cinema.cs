@@ -25,6 +25,16 @@ namespace CinevoScrapper.Models
         //public decimal Lattitude { get; set; }
         //public decimal Longitude { get; set; }
         [BsonElement]
+        public string NightPasses { get; set; }
+        [BsonElement]
+        public string MorningPasses { get; set; }
+        [BsonElement]
+        public string CheapDay { get; set; }
+        [BsonElement]
+        public string OnlineTickets { get; set; }
+        [BsonElement]
+        public string MapUrl{ get; set; }
+        [BsonElement]
         public string TownId { get; set; }
         [BsonElement]
         public string Town { get; set; }

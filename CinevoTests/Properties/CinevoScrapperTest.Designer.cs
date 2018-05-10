@@ -25,7 +25,7 @@ namespace CinevoTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\FilesAreEqual")]
         public string EqualFilesDownloaded {
             get {
                 return ((string)(this["EqualFilesDownloaded"]));
@@ -83,6 +83,30 @@ namespace CinevoTests.Properties {
         public string Temporal {
             get {
                 return ((string)(this["Temporal"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\HtmlFiles\\Films")]
+        public string Films {
+            get {
+                return ((string)(this["Films"]));
+            }
+            set {
+                this["Films"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\HtmlFiles\\Films\\Old")]
+        public string FilmsOld {
+            get {
+                return ((string)(this["FilmsOld"]));
+            }
+            set {
+                this["FilmsOld"] = value;
             }
         }
     }

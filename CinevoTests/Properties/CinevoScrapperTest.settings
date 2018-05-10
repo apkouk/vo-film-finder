@@ -23,5 +23,11 @@
     <Setting Name="Temporal" Type="System.String" Scope="Application">
       <Value Profile="(Default)">..\..\..\CinevoTests\Resources</Value>
     </Setting>
+    <Setting Name="Films" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\CinevoTests\HtmlFiles\Films</Value>
+    </Setting>
+    <Setting Name="FilmsOld" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\CinevoTests\HtmlFiles\Films\Old</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
