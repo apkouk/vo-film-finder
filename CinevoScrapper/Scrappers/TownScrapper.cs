@@ -83,9 +83,12 @@ namespace CinevoScrapper.Scrappers
                 string line;
                 while ((line = fileReader.ReadLine()) != null)
                 {
-                    if (line.Contains("</select>")) break;
+                    if (line.Contains("</select>"))
+                        break;
 
-                    if (line.Contains("id=\"dropdown-listado-poblacion\" class=\"form-control\"")) addLine = true;
+                    if (line.Contains("id=\"dropdown-listado-poblacion\" class=\"form-control\""))
+                        addLine = true;
+
                     if (addLine)
                         if (line.Contains("data-name"))
                             Towns.Add(ConvertToObject(line));

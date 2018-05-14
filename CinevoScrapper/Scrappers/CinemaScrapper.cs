@@ -82,7 +82,7 @@ namespace CinevoScrapper.Scrappers
                 Cinemas = new List<Cinema>();
                 var linesPerCinema = new ArrayList();
                 var fileReader = new StreamReader(getLastHtmlFullName);
-                
+
                 string line;
                 var counter = 0;
                 var cinemaAdded = 2;
@@ -101,11 +101,12 @@ namespace CinevoScrapper.Scrappers
                         }
 
                         if (addLine)
+                        {
                             if (counter - cinemaAdded == 0)
                             {
                                 Cinema cinema = ConvertToObject(linesPerCinema);
-                                if(cinema.Name != null)
-                                    Cinemas.Add(cinema);                                
+                                if (cinema.Name != null)
+                                    Cinemas.Add(cinema);
                                 counter = 0;
                                 cinemaAdded = 1;
                                 linesPerCinema.Clear();
@@ -115,6 +116,7 @@ namespace CinevoScrapper.Scrappers
                             {
                                 linesPerCinema.Add(line);
                             }
+                        }
                     }
                 }
 
