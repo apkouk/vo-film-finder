@@ -8,13 +8,26 @@ namespace CinevoScrapper.Models
 {
     public class Time
     {
-        private DateTime From { get; set; }
-        private DateTime To { get; set; }
-
-        public Time(DateTime from, DateTime to)
+        private string _day;
+        public string Day
         {
-            From = from;
-            To = to;
+            get { return _day; }
+            set { _day = value; }
         }
+
+        private List<string> _times;
+        public List<string> Times
+        {
+            get { return _times; }
+            set { _times = value; }
+        }
+
+
+        public Time()
+        {
+            Times = new List<string>();
+        }
+
+        
     }
 }

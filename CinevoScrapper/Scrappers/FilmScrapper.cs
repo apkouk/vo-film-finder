@@ -35,8 +35,6 @@ namespace CinevoScrapper.Scrappers
                     CinevoFiles.SaveToFile(Path, Cinema.Tag, "html", HtmlContent);
                 }
                 GetContentInJson(Path);
-                //JsonContent = JsonConvert.SerializeObject(Films).Trim().TrimEnd().TrimStart();
-                //Console.WriteLine("CINEVO CINEMA FILES SCRAPPER: JsconContent added...");
             }
             catch (Exception ex)
             {
@@ -47,11 +45,11 @@ namespace CinevoScrapper.Scrappers
         public void GetContentInJson(string path)
         {
             string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Cinema.Tag));
-            //for (int i = 0; i < files.Length; i++)
+
             if (!string.IsNullOrEmpty(files))
             {
                 Films = new List<Film>();
-                
+
                 var fileReader = new StreamReader(files);
                 string line;
 
@@ -79,20 +77,13 @@ namespace CinevoScrapper.Scrappers
 
                     if (line.Contains("Películas en proyeccion"))
                         updatingFilm = true;
-
                 }
-         
-                //Films.Add(ConvertToObject(linesPerCinema));
-          
                 fileReader.Close();
                 fileReader.Dispose();
             }
         }
-
-
-        private int _counter;
-        private int _filmAdded = 2;
-        private bool _addLine = false;
+        
+        private bool _addLine;
         private readonly ArrayList _linesPerFilm = new ArrayList();
         private void GetFilmInfo(string lineHtml)
         {
@@ -111,17 +102,9 @@ namespace CinevoScrapper.Scrappers
 
                     Film film = ConvertToObject(_linesPerFilm);
                     if (film.Name != null)
-                        Films.Add(film);
+                        Cinema.Films.Add(film);
                     _linesPerFilm.Clear();
                 }
-                //if (addingAddress)
-                //{
-                //    if (!lineHtml.Trim().Equals("<p>") && !lineHtml.Trim().Equals("</div>") && !lineHtml.Trim().Contains("maps") && !lineHtml.Trim().Contains("col-xs-12 col-sm-12 col-md-3 txt") && lineHtml.Trim().Length > 0)
-                //    {
-                //        Cinema.Address = CleanAddress(lineHtml);
-                //        addingAddress = false;
-                //    }
-                //}
 
                 if (_addLine)
                 {
@@ -129,28 +112,8 @@ namespace CinevoScrapper.Scrappers
                         _linesPerFilm.Add(lineHtml);
                     }
                 }
-
-
-                //if (lineHtml.Contains("Ver película"))
-                //    Cinema.Telephone = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
-
-                //if (lineHtml.Contains("Venta Golfas:"))
-                //    Cinema.NightPasses = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
-
-                //if (lineHtml.Contains("Matinales:"))
-                //    Cinema.MorningPasses = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
-
-                //if (lineHtml.Contains("Día del espectador:"))
-                //    Cinema.CheapDay = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
-
-                //if (lineHtml.Contains("Venta anticipada:"))
-                //    Cinema.OnlineTickets = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
-
-                //if (lineHtml.Contains("<img src="))
-                //    Cinema.MapUrl = CinevoStrings.GetChunk(lineHtml, "<img src=", ">");
             }
         }
-
 
         private void GetCinemaInfo(string lineHtml)
         {
@@ -199,46 +162,45 @@ namespace CinevoScrapper.Scrappers
         {
             try
             {
-                
                 var film = new Film();
-
-                bool addingAddress = false;
+                Time time = null;
+                bool addingDay = false;
 
                 foreach (string lineHtml in linesPerFilm)
                 {
                     if (!lineHtml.Equals(string.Empty))
                     {
-                        //if (addingAddress)
-                        //{
-                        //    if (!lineHtml.Trim().Equals("<p>") && !lineHtml.Trim().Equals("</div>") && !lineHtml.Trim().Contains("maps") && lineHtml.Trim().Length > 0)
-                        //    {
-                        //        Cinema.Address = CleanAddress(lineHtml);
-                        //        addingAddress = false;
-                        //    }
-                        //}
+                        if (lineHtml.Contains("<img style"))
+                            film.Image = CinevoStrings.GetChunk(lineHtml, "src=\"", "\" alt");
 
-                        //if (lineHtml.Contains("col-xs-12 col-sm-12 col-md-3 txt"))
-                        //{
-                        //    addingAddress = true;
-                        //}
+                        if (lineHtml.Contains("Ver película"))
+                            film.Description = CinevoStrings.GetChunk(lineHtml, "href=\"", "\" title");
 
-                        //if (lineHtml.Contains("Tel:"))
-                        //    Cinema.Telephone = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+                        if (lineHtml.Contains("(") && lineHtml.Contains(")"))
+                            film.Version = lineHtml;
 
-                        //if (lineHtml.Contains("Venta Golfas:"))
-                        //    Cinema.NightPasses = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+                        if (lineHtml.Contains("href=\"") && lineHtml.Contains("title=\"") && lineHtml.Contains("class=\""))
+                            film.Name = CinevoStrings.GetChunk(lineHtml, "\">", "</a>");
 
-                        //if (lineHtml.Contains("Matinales:"))
-                        //    Cinema.MorningPasses = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+                        if (lineHtml.Contains("class=\"wrap\""))
+                            addingDay = true;
 
-                        //if (lineHtml.Contains("Día del espectador:"))
-                        //    Cinema.CheapDay = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+                        if (addingDay)
+                        {
+                            if (lineHtml.Trim().Contains("<dt>"))
+                            {
+                                time = new Time();
+                                time.Day = CinevoStrings.GetChunk(lineHtml, ">", "</");
+                            }
+                            if (lineHtml.Trim().Contains("<dd>"))
+                                time?.Times.Add(CinevoStrings.GetChunk(lineHtml, ">", "</"));
 
-                        //if (lineHtml.Contains("Venta anticipada:"))
-                        //    Cinema.OnlineTickets = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
-
-                        //if (lineHtml.Contains("<img src="))
-                        //    Cinema.MapUrl = CinevoStrings.GetChunk(lineHtml, "<img src=", ">");
+                            if (lineHtml.Trim().Contains("</dl>"))
+                            {
+                                addingDay = false;
+                                film.Times.Add(time);
+                            }
+                        }
                     }
                 }
                 return film;

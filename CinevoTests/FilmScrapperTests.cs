@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
 using CinevoScrapper.Scrappers;
@@ -41,6 +42,7 @@ namespace CinevoTests
               
                 filmScrapper.GetHtmlFromUrl();
             }
+            Assert.IsTrue(cinemas.Cinemas.Any(x => x.Films.Count > 0));
         }
     }
 }
