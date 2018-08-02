@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace CinevoScrapper.Helpers
 {
@@ -20,6 +21,11 @@ namespace CinevoScrapper.Helpers
             var result = text.Substring(intFrom, moveChars);
             result = result.Remove(result.LastIndexOf(removeFromLast, StringComparison.Ordinal));
             return result;
+        }
+
+        public static string StripHtml(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
     }
 }

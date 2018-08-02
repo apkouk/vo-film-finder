@@ -2,11 +2,10 @@
 ---------------------------------------------------------     CINEVO     -----------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------
 
-DOING NOW => Films in OV on each cinema
-Find examples of cinema pages (with its films) with all possible data to scrap and do the same for films pages.
-- We are scrapping every cinema page to get their films and its times
-- We already have a collention with all the cinemas. Loop that collection to get just those original versions films on their board.
-
+DOING NOW => 
+- We have all the films info in html, make the scrapper to get the info of each one
+- Once we have the info done will have to save everything on db
+- Get info from db
 
 
 GENERAL

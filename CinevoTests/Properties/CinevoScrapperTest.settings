@@ -29,5 +29,11 @@
     <Setting Name="FilmsOld" Type="System.String" Scope="User">
       <Value Profile="(Default)">..\..\..\CinevoTests\HtmlFiles\Films\Old</Value>
     </Setting>
+    <Setting Name="FilmInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\CinevoTests\HtmlFiles\FilmsInfo</Value>
+    </Setting>
+    <Setting Name="FilmInfoOld" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\CinevoTests\HtmlFiles\FilmsInfo\Old</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

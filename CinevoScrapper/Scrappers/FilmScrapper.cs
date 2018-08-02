@@ -23,7 +23,12 @@ namespace CinevoScrapper.Scrappers
         public List<Film> Films { get; set; }
         public Cinema Cinema { get; set; }
 
-        bool addingAddress = false;
+        private const string EndLocation = "END: onbcn-cinema-location";
+        private const string StartLocation = "START: onbcn-cinema-location";
+        private const string EndFilms = "START: onbcn-toolbar";
+        private const string StartFilms = "Películas en proyeccion";
+        private const string EndFilmInfo = "class=\"row\"";
+        private const string StartFimInfo = "<figure class=\"thumb\">";
 
         public void GetHtmlFromUrl()
         {
@@ -62,20 +67,20 @@ namespace CinevoScrapper.Scrappers
                     if (updatingCinema)
                         GetCinemaInfo(line);
 
-                    if (line.Contains("END: onbcn-cinema-location"))
+                    if (line.Contains(EndLocation))
                         updatingCinema = false;
 
-                    if (line.Contains("START: onbcn-cinema-location"))
+                    if (line.Contains(StartLocation))
                         updatingCinema = true;
 
                     //Films
                     if (updatingFilm)
                         GetFilmInfo(line);
 
-                    if (line.Contains("START: onbcn-toolbar"))
+                    if (line.Contains(EndFilms))
                         updatingFilm = false;
 
-                    if (line.Contains("Películas en proyeccion"))
+                    if (line.Contains(StartFilms))
                         updatingFilm = true;
                 }
                 fileReader.Close();
@@ -91,12 +96,12 @@ namespace CinevoScrapper.Scrappers
             {
                 char tab = '\u0009';
                 lineHtml = lineHtml.Replace(tab.ToString(), "");
-                if (lineHtml.Contains("<figure class=\"thumb\">"))
+                if (lineHtml.Contains(StartFimInfo))
                 {
                     _addLine = true;
                 }
 
-                if (lineHtml.Contains("class=\"row\""))
+                if (lineHtml.Contains(EndFilmInfo))
                 {
                     _addLine = false;
 
@@ -115,21 +120,22 @@ namespace CinevoScrapper.Scrappers
             }
         }
 
+        bool _addingAddress;
         private void GetCinemaInfo(string lineHtml)
         {
             if (!lineHtml.Equals(string.Empty))
             {
                 if (lineHtml.Contains("col-xs-12 col-sm-12 col-md-3 txt"))
                 {
-                    addingAddress = true;
+                    _addingAddress = true;
                 }
 
-                if (addingAddress)
+                if (_addingAddress)
                 {
                     if (!lineHtml.Trim().Equals("<p>") && !lineHtml.Trim().Equals("</div>") && !lineHtml.Trim().Contains("maps") && !lineHtml.Trim().Contains("col-xs-12 col-sm-12 col-md-3 txt") && lineHtml.Trim().Length > 0)
                     {
                         Cinema.Address = CleanAddress(lineHtml);
-                        addingAddress = false;
+                        _addingAddress = false;
                     }
                 }
 
@@ -165,6 +171,7 @@ namespace CinevoScrapper.Scrappers
                 var film = new Film();
                 Time time = null;
                 bool addingDay = false;
+                const string baseUrl = "https://cartelera.elperiodico.com";
 
                 foreach (string lineHtml in linesPerFilm)
                 {
@@ -174,14 +181,23 @@ namespace CinevoScrapper.Scrappers
                             film.Image = CinevoStrings.GetChunk(lineHtml, "src=\"", "\" alt");
 
                         if (lineHtml.Contains("Ver película"))
-                            film.Description = CinevoStrings.GetChunk(lineHtml, "href=\"", "\" title");
+                            film.FilmUrl = baseUrl + CinevoStrings.GetChunk(lineHtml, "href=\"", "\" title");
 
                         if (lineHtml.Contains("(") && lineHtml.Contains(")"))
                             film.Version = lineHtml;
 
                         if (lineHtml.Contains("href=\"") && lineHtml.Contains("title=\"") && lineHtml.Contains("class=\""))
+                        { 
                             film.Name = CinevoStrings.GetChunk(lineHtml, "\">", "</a>");
 
+
+                            //var invalidChars = System.IO.Path.GetInvalidFileNameChars();
+                            //var invalidCharsRemoved = film.Name.Where(x => !invalidChars.Contains(x)).ToArray().ToString();
+
+                            film.Tag = !film.Name.Equals(string.Empty)
+                                ? film.Name.Replace(" ", "-").Replace("#","").TrimEnd().TrimStart().ToLower()
+                                : film.Tag = "NOTAG";
+                        }
                         if (lineHtml.Contains("class=\"wrap\""))
                             addingDay = true;
 
@@ -189,8 +205,7 @@ namespace CinevoScrapper.Scrappers
                         {
                             if (lineHtml.Trim().Contains("<dt>"))
                             {
-                                time = new Time();
-                                time.Day = CinevoStrings.GetChunk(lineHtml, ">", "</");
+                                time = new Time {Day = CinevoStrings.GetChunk(lineHtml, ">", "</")};
                             }
                             if (lineHtml.Trim().Contains("<dd>"))
                                 time?.Times.Add(CinevoStrings.GetChunk(lineHtml, ">", "</"));

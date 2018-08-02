@@ -109,5 +109,29 @@ namespace CinevoTests.Properties {
                 this["FilmsOld"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\HtmlFiles\\FilmsInfo")]
+        public string FilmInfo {
+            get {
+                return ((string)(this["FilmInfo"]));
+            }
+            set {
+                this["FilmInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CinevoTests\\HtmlFiles\\FilmsInfo\\Old")]
+        public string FilmInfoOld {
+            get {
+                return ((string)(this["FilmInfoOld"]));
+            }
+            set {
+                this["FilmInfoOld"] = value;
+            }
+        }
     }
 }
