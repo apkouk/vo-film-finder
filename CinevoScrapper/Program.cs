@@ -49,6 +49,8 @@ namespace CinevoScrapper
                         filmInfoScrapper.GetHtmlFromUrl();
                     }
                 }
+                
+
 
                 List<Cinema> cinemaTest = cinemas.Cinemas.Where(x => x.Films.Any(y => y.Version != "(VE)")).ToList();
             }
