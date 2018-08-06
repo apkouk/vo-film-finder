@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
 using CinevoScrapper.Scrappers;
@@ -10,35 +12,45 @@ namespace CinevoScrapper
     {
         private static void Main(string[] args)
         {
-
-            IScrapperCinema cinemasPage = new CinemaScrapper
+            IScrapperCinema cinemas = new IndexScrapper
             {
-                Path = Properties.CinevoScrapper.Default.PathTownsCinemas,
-                PathProcessed = Properties.CinevoScrapper.Default.PathTownsCinemaProcessed,
+                Path = Properties.CinevoScrapper.Default.CinemasIndex + DateTime.Now.ToString("ddMMyyyy"),
                 Url = "https://cartelera.elperiodico.com/cines/",
-                ForceRequest = !Properties.CinevoScrapper.Default.IsTestEnvironment
+                ForceRequest = !Convert.ToBoolean(Properties.CinevoScrapper.Default.ForceRequest)
             };
 
             try
             {
-                cinemasPage.HasChanged();
-                
-                if (Properties.CinevoScrapper.Default.CleanDirectories)
-                    CleanFiles(cinemasPage.Path, cinemasPage.PathProcessed);
+                cinemas.GetHtmlFromUrl();
 
-                foreach (Cinema cinema in cinemasPage.Cinemas)
+                foreach (Cinema cinema in cinemas.Cinemas)
                 {
-                    IScrapperFilms scrapperCinemaFilms = new FilmScrapper
+                    IScrapperFilms filmScrapper = new CinemaScrapper
                     {
-                        Path = Properties.CinevoScrapper.Default.PathFilmCinema,
-                        PathProcessed = Properties.CinevoScrapper.Default.PathFimlCinemaProcessed,
-                        ForceRequest = !Properties.CinevoScrapper.Default.IsTestEnvironment
+                        Path = Properties.CinevoScrapper.Default.Cinemas + DateTime.Now.ToString("ddMMyyyy"),
+                        Url = cinema.Url,
+                        Cinema = cinema,
+                        ForceRequest = !Convert.ToBoolean(Properties.CinevoScrapper.Default.ForceRequest)
                     };
-
-                    //var webScrapper = new WebScrapper(cinemasPage);
-                    //if (Properties.CinevoScrapper.Default.CleanDirectories)
-                    //    webScrapper.CleanFiles();
+                    filmScrapper.GetHtmlFromUrl();
                 }
+
+
+                foreach (Cinema cinema in cinemas.Cinemas)
+                {
+                    foreach (Film film in cinema.Films)
+                    {
+                        IScrapperFilmInfo filmInfoScrapper = new FilmScrapper
+                        {
+                            Path = Properties.CinevoScrapper.Default.Film + DateTime.Now.ToString("ddMMyyyy"),
+                            Film = film,
+                            ForceRequest = !Convert.ToBoolean(Properties.CinevoScrapper.Default.ForceRequest)
+                        };
+                        filmInfoScrapper.GetHtmlFromUrl();
+                    }
+                }
+
+                List<Cinema> cinemaTest = cinemas.Cinemas.Where(x => x.Films.Any(y => y.Version != "(VE)")).ToList();
             }
             catch (Exception e)
             {
@@ -60,7 +72,7 @@ namespace CinevoScrapper
 
         private static void CleanFiles()
         {
-        
+
         }
     }
 }

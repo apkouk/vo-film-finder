@@ -27,5 +27,20 @@ namespace CinevoScrapper.Helpers
         {
             return Regex.Replace(input, "<.*?>", String.Empty);
         }
+
+        public static string RemoveChars(string lineHtml, char _char)
+        {
+            string[] words = lineHtml.Split(_char);
+            string result = string.Empty;
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (!words[i].Equals(string.Empty))
+                {
+                    result += words[i] + " ";
+                }
+            }
+            return result;
+        }
     }
 }

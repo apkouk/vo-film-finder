@@ -15,7 +15,7 @@ namespace CinevoTests
 
         private IScrapperCinema DiffObjets()
         {
-            IScrapperCinema cinemasPage = new CinemaScrapper
+            IScrapperCinema cinemasPage = new IndexScrapper
             {
                 Path = Properties.CinevoScrapperTest.Default.DiffFilesDownloaded,
                 PathProcessed = Properties.CinevoScrapperTest.Default.DiffFilesOld,
@@ -29,11 +29,11 @@ namespace CinevoTests
         public void Should_return_a_list_of_films_in_cinema()
         {
             IScrapperCinema cinemas = DiffObjets();
-            cinemas.HasChanged();
+            cinemas.GetHtmlFromUrl();
 
             foreach (Cinema cinema in cinemas.Cinemas)
             {
-                IScrapperFilms filmScrapper = new FilmScrapper
+                IScrapperFilms filmScrapper = new CinemaScrapper
                 {
                     Path = Properties.CinevoScrapperTest.Default.Films,
                     PathProcessed = Properties.CinevoScrapperTest.Default.FilmsOld,
@@ -51,11 +51,11 @@ namespace CinevoTests
         public void Should_return_a_list_of_films_with_info()
         {
             IScrapperCinema cinemas = DiffObjets();
-            cinemas.HasChanged();
+            cinemas.GetHtmlFromUrl();
 
             foreach (Cinema cinema in cinemas.Cinemas)
             {
-                IScrapperFilms filmScrapper = new FilmScrapper
+                IScrapperFilms filmScrapper = new CinemaScrapper
                 {
                     Path = Properties.CinevoScrapperTest.Default.Films,
                     PathProcessed = Properties.CinevoScrapperTest.Default.FilmsOld,
@@ -71,7 +71,7 @@ namespace CinevoTests
             {
                 foreach (Film film in cinema.Films)
                 {
-                    IScrapperFilmInfo filmInfoScrapper = new FilmInfoScrapper
+                    IScrapperFilmInfo filmInfoScrapper = new FilmScrapper
                     {
                         Path = Properties.CinevoScrapperTest.Default.FilmInfo,
                         PathProcessed = Properties.CinevoScrapperTest.Default.FilmInfoOld,
@@ -82,7 +82,8 @@ namespace CinevoTests
                 }
             }
 
-            Assert.IsTrue(cinemas.Cinemas.Any(x => x.Films.Count > 0));
+            List<Cinema> cinemaTest = cinemas.Cinemas.Where(x => x.Films.Any(y => y.Version != "(VE)")).ToList();
+            Assert.IsTrue(cinemaTest.Count > 0);
         }
     }
 }

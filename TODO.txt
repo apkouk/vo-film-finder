@@ -3,8 +3,7 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 
 DOING NOW => 
-- We have all the films info in html, make the scrapper to get the info of each one
-- Once we have the info done will have to save everything on db
+- Once we have the info done will have to save everything on db (on localhost)
 - Get info from db
 
 

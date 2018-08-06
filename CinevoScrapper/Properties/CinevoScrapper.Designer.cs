@@ -25,55 +25,58 @@ namespace CinevoScrapper.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\TownsAndCinemas\\")]
-        public string PathTownsCinemas {
-            get {
-                return ((string)(this["PathTownsCinemas"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\TownsAndCinemas\\Processed")]
-        public string PathTownsCinemaProcessed {
-            get {
-                return ((string)(this["PathTownsCinemaProcessed"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CleanDirectories {
             get {
                 return ((bool)(this["CleanDirectories"]));
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsTestEnvironment {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\Cinemas\\")]
+        public string Cinemas {
             get {
-                return ((bool)(this["IsTestEnvironment"]));
+                return ((string)(this["Cinemas"]));
+            }
+            set {
+                this["Cinemas"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\FilmScrapper\\")]
-        public string PathFilmCinema {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\Films\\")]
+        public string Film {
             get {
-                return ((string)(this["PathFilmCinema"]));
+                return ((string)(this["Film"]));
+            }
+            set {
+                this["Film"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\FilmScrapper\\Processed")]
-        public string PathFimlCinemaProcessed {
+        [global::System.Configuration.DefaultSettingValueAttribute("true")]
+        public string ForceRequest {
             get {
-                return ((string)(this["PathFimlCinemaProcessed"]));
+                return ((string)(this["ForceRequest"]));
+            }
+            set {
+                this["ForceRequest"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\CinemaIndex\\")]
+        public string CinemasIndex {
+            get {
+                return ((string)(this["CinemasIndex"]));
+            }
+            set {
+                this["CinemasIndex"] = value;
             }
         }
     }

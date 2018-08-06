@@ -1,59 +1,34 @@
-﻿using System;
+﻿using CinevoScrapper.Interfaces;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
+using System.Threading;
 using CinevoScrapper.Helpers;
-using CinevoScrapper.Interfaces;
 using CinevoScrapper.Models;
-using Newtonsoft.Json;
 
 namespace CinevoScrapper.Scrappers
 {
-    public class CinemaScrapper : IScrapperCinema
+    public class CinemaScrapper : IScrapperFilms
     {
-        private int count = 1;
         public string Url { get; set; }
         public string HtmlContent { get; set; }
         public string JsonContent { get; set; }
         public bool ForceRequest { get; set; }
         public string Path { get; set; }
         public string PathProcessed { get; set; }
-        public bool HasChanged { get; set; }
-        public List<Cinema> Cinemas { get; set; }
-        public bool FindFilms { get; set; }
+        public List<Film> Films { get; set; }
+        public Cinema Cinema { get; set; }
 
-        bool IScrapperCinema.HasChanged()
-        {
-            try
-            {
-                if (!Directory.Exists(PathProcessed))
-                {
-                    Directory.CreateDirectory(PathProcessed);
-                    return true;
-                }
-
-                var file = new CinevoFiles
-                {
-                    Scrapper = this,
-                    OldFilePath = PathProcessed,
-                    Path = Path,
-                    HasChanged = false,
-                    Type = CinevoEnums.PageTypes.Cinema
-                };
-
-                file.MakeComparision();
-                Console.WriteLine("CINEVO CINEMA SCRAPPER: Has content changed? => " + file.HasChanged);
-                HasChanged = file.HasChanged;
-                return HasChanged;
-            }
-            catch (Exception ex)
-            {
-                new Error().SendError(ex);
-                return false;
-            }
-        }
+        private const string EndLocation = "END: onbcn-cinema-location";
+        private const string StartLocation = "START: onbcn-cinema-location";
+        private const string EndFilms = "START: onbcn-toolbar";
+        private const string StartFilms = "Películas en proyeccion";
+        private const string EndFilmInfo = "class=\"row\"";
+        private const string StartFimInfo = "<figure class=\"thumb\">";
 
         public void GetHtmlFromUrl()
         {
@@ -61,9 +36,10 @@ namespace CinevoScrapper.Scrappers
             {
                 if (ForceRequest)
                 {
-                    HtmlContent = CinevoRequests.GetContent(Url).Trim().TrimEnd().TrimStart();
-                    CinevoFiles.SaveToFile(Path, CinevoEnums.PageTypes.Town.ToString(), "html", HtmlContent);
+                    HtmlContent = CinevoRequests.GetContent(Cinema.Url).Trim().TrimEnd().TrimStart();
+                    CinevoFiles.SaveToFile(Path, Cinema.Tag, "html", HtmlContent);
                 }
+                GetContentInJson(Path);
             }
             catch (Exception ex)
             {
@@ -73,91 +49,178 @@ namespace CinevoScrapper.Scrappers
 
         public void GetContentInJson(string path)
         {
-            JsonContent = "NO CONTENT";
-            var addLine = false;
-            string getLastHtmlFullName = CinevoFiles.GetLastHtmlPath(path);
+            string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Cinema.Tag));
 
-            if (getLastHtmlFullName != null && !getLastHtmlFullName.Equals(string.Empty))
+            if (!string.IsNullOrEmpty(files))
             {
-                Cinemas = new List<Cinema>();
-                var linesPerCinema = new ArrayList();
-                var fileReader = new StreamReader(getLastHtmlFullName);
+                Films = new List<Film>();
 
+                var fileReader = new StreamReader(files);
                 string line;
-                var counter = 0;
-                var cinemaAdded = 2;
+
+                bool updatingCinema = false;
+                bool updatingFilm = false;
 
                 while ((line = fileReader.ReadLine()) != null)
                 {
-                    if (line.Contains("<!-- /listado CINES -->"))
-                        break;
+                    //CinemaInfo
+                    if (updatingCinema)
+                        GetCinemaInfo(line);
 
-                    if (!line.Trim().Equals(string.Empty) && line.Trim().Length > 20)
+                    if (line.Contains(EndLocation))
+                        updatingCinema = false;
+
+                    if (line.Contains(StartLocation))
+                        updatingCinema = true;
+
+                    //Films
+                    if (updatingFilm)
+                        GetFilmInfo(line);
+
+                    if (line.Contains(EndFilms))
+                        updatingFilm = false;
+
+                    if (line.Contains(StartFilms))
+                        updatingFilm = true;
+                }
+                fileReader.Close();
+                fileReader.Dispose();
+            }
+        }
+        
+        private bool _addLine;
+        private readonly ArrayList _linesPerFilm = new ArrayList();
+        private void GetFilmInfo(string lineHtml)
+        {
+            if (!lineHtml.Equals(string.Empty))
+            {
+                char tab = '\u0009';
+                lineHtml = lineHtml.Replace(tab.ToString(), "");
+                if (lineHtml.Contains(StartFimInfo))
+                {
+                    _addLine = true;
+                }
+
+                if (lineHtml.Contains(EndFilmInfo))
+                {
+                    _addLine = false;
+
+                    Film film = ConvertToObject(_linesPerFilm);
+                    if (film.Name != null)
+                        Cinema.Films.Add(film);
+                    _linesPerFilm.Clear();
+                }
+
+                if (_addLine)
+                {
                     {
-                        if (line.Contains("col-xs-12 col-sm-6 col-md-6 info-cine"))
-                        {
-                            addLine = true;
-                            counter++;
-                        }
+                        _linesPerFilm.Add(lineHtml);
+                    }
+                }
+            }
+        }
 
-                        if (addLine)
-                        {
-                            if (counter - cinemaAdded == 0)
-                            {
-                                Cinema cinema = ConvertToObject(linesPerCinema);
-                                if (cinema.Name != null)
-                                    Cinemas.Add(cinema);
-                                counter = 0;
-                                cinemaAdded = 1;
-                                linesPerCinema.Clear();
-                                linesPerCinema.Add(line);
-                            }
-                            else
-                            {
-                                linesPerCinema.Add(line);
-                            }
-                        }
+        bool _addingAddress;
+        private void GetCinemaInfo(string lineHtml)
+        {
+            if (!lineHtml.Equals(string.Empty))
+            {
+                if (lineHtml.Contains("col-xs-12 col-sm-12 col-md-3 txt"))
+                {
+                    _addingAddress = true;
+                }
+
+                if (_addingAddress)
+                {
+                    if (!lineHtml.Trim().Equals("<p>") && !lineHtml.Trim().Equals("</div>") && !lineHtml.Trim().Contains("maps") && !lineHtml.Trim().Contains("col-xs-12 col-sm-12 col-md-3 txt") && lineHtml.Trim().Length > 0)
+                    {
+                        Cinema.Address = CinevoStrings.RemoveChars(lineHtml, '\t');
+                        _addingAddress = false;
                     }
                 }
 
-                fileReader.Close();
-                fileReader.Dispose();
-                JsonContent = JsonConvert.SerializeObject(Cinemas).Trim().TrimEnd().TrimStart();
-                Console.WriteLine("CINEVO CINEMA SCRAPPER: JsconContent added...");
+                if (lineHtml.Contains("Tel:"))
+                    Cinema.Telephone = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+
+                if (lineHtml.Contains("Venta Golfas:"))
+                    Cinema.NightPasses = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+
+                if (lineHtml.Contains("Matinales:"))
+                    Cinema.MorningPasses = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+
+                if (lineHtml.Contains("Día del espectador:"))
+                    Cinema.CheapDay = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+
+                if (lineHtml.Contains("Venta anticipada:"))
+                    Cinema.OnlineTickets = CinevoStrings.GetChunk(lineHtml, "</strong> ", "</p>");
+
+                if (lineHtml.Contains("<img src="))
+                    Cinema.MapUrl = CinevoStrings.GetChunk(lineHtml, "<img src=", ">");
             }
         }
 
         public bool SaveToDb()
         {
-            if (HasChanged)
-                return CinevoMongoDb.SaveCinemasInDd(Cinemas);
-            return false;
+            throw new NotImplementedException();
         }
 
-        private Cinema ConvertToObject(ArrayList linesPerCinema)
+        private Film ConvertToObject(ArrayList linesPerFilm)
         {
             try
             {
-                var cinema = new Cinema();
-                cinema.CinemaId = count++.ToString();
-                foreach (string lineHtml in linesPerCinema)
+                var film = new Film();
+                Time time = null;
+                bool addingDay = false;
+                const string baseUrl = "https://cartelera.elperiodico.com";
+
+                foreach (string lineHtml in linesPerFilm)
                 {
-                    if (lineHtml.Contains("col-xs-12 col-sm-6 col-md-6 info-cine"))
-                        cinema.TownId = CinevoStrings.GetChunk(lineHtml, "data-poblacion=\"", "\">");
-                    if (lineHtml.Contains("href"))
+                    if (!lineHtml.Equals(string.Empty))
                     {
-                        cinema.Name = CinevoStrings.GetChunk(lineHtml, "\">", "</a>");
-                        cinema.Url = CinevoStrings.GetChunk(lineHtml, "href=\"", "\">");
-                        cinema.Tag = cinema.Name.ToLower().Replace(' ', '-');
+                        if (lineHtml.Contains("<img style"))
+                            film.Image = CinevoStrings.GetChunk(lineHtml, "src=\"", "\" alt");
+
+                        if (lineHtml.Contains("Ver película"))
+                            film.FilmUrl = baseUrl + CinevoStrings.GetChunk(lineHtml, "href=\"", "\" title");
+
+                        if (lineHtml.Contains("(") && lineHtml.Contains(")"))
+                            film.Version = lineHtml;
+
+                        if (lineHtml.Contains("href=\"") && lineHtml.Contains("title=\"") && lineHtml.Contains("class=\""))
+                        { 
+                            film.Name = CinevoStrings.GetChunk(lineHtml, "\">", "</a>");
+
+
+                            //var invalidChars = System.IO.Path.GetInvalidFileNameChars();
+                            //var invalidCharsRemoved = film.Name.Where(x => !invalidChars.Contains(x)).ToArray().ToString();
+
+                            string tagTemp = !film.Name.Equals(string.Empty)
+                                ? film.Name.Replace(",", "").Replace(" ", "-").Replace("#","").TrimEnd().TrimStart().ToLower()
+                                : film.Tag = "NOTAG";
+
+                            film.Tag = System.IO.Path.GetInvalidFileNameChars().Aggregate(tagTemp, (current, c) => current.Replace(c.ToString(), string.Empty));
+                        }
+                        if (lineHtml.Contains("class=\"wrap\""))
+                            addingDay = true;
+
+                        if (addingDay)
+                        {
+                            if (lineHtml.Trim().Contains("<dt>"))
+                            {
+                                time = new Time {Day = CinevoStrings.GetChunk(lineHtml, ">", "</")};
+                            }
+                            if (lineHtml.Trim().Contains("<dd>"))
+                                time?.Times.Add(CinevoStrings.GetChunk(lineHtml, ">", "</"));
+
+                            if (lineHtml.Trim().Contains("</dl>"))
+                            {
+                                addingDay = false;
+                                film.Times.Add(time);
+                            }
+                        }
                     }
-                    if (lineHtml.Contains("TEL"))
-                        cinema.Telephone = CinevoStrings.GetChunk(lineHtml, "</strong>", "</p>").TrimStart();
-                    if (lineHtml.Contains("DIRECCIÓN"))
-                        cinema.Address = CinevoStrings.GetChunk(lineHtml, "</strong>", "</p>").TrimStart();
-                    if (lineHtml.EndsWith("</p>") && cinema.Address != null)
-                        cinema.Town = lineHtml.Replace("</p>", "");
                 }
-                return cinema;
+                return film;
             }
             catch (Exception ex)
             {
@@ -165,5 +228,7 @@ namespace CinevoScrapper.Scrappers
                 return null;
             }
         }
+
+       
     }
 }

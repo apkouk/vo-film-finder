@@ -33,5 +33,7 @@ namespace CinevoTests
             string html = "<option value=\"872\" data-name=\"abrera\" ><a href=\"https://cartelera.elperiodico.com/cines/abrera/\">Abrera</a></option>";
             Assert.IsTrue(CinevoStrings.GetChunk(html, "value=\"", "data-name", "\"").Equals("872"));
         }
+
+
     }
 }

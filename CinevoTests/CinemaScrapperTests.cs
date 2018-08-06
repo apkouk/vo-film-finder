@@ -10,7 +10,7 @@ namespace CinevoTests
 
         private IScrapperCinema EqualObjets()
         {
-            IScrapperCinema cinemasPage = new CinemaScrapper
+            IScrapperCinema cinemasPage = new IndexScrapper
             {
                 Path = Properties.CinevoScrapperTest.Default.EqualFilesDownloaded,
                 PathProcessed = Properties.CinevoScrapperTest.Default.EqualFilesOld,
@@ -21,7 +21,7 @@ namespace CinevoTests
         }
         private IScrapperCinema DiffObjets()
         {
-            IScrapperCinema cinemasPage = new CinemaScrapper
+            IScrapperCinema cinemasPage = new IndexScrapper
             {
                 Path = Properties.CinevoScrapperTest.Default.DiffFilesDownloaded,
                 PathProcessed = Properties.CinevoScrapperTest.Default.DiffFilesOld,
@@ -32,24 +32,10 @@ namespace CinevoTests
         }
 
         [TestMethod]
-        public void Should_say_that_files_are_equal()
-        {
-            IScrapperCinema cinemasPage = EqualObjets();
-            Assert.IsFalse(cinemasPage.HasChanged());
-        }
-
-        [TestMethod]
-        public void Should_say_that_files_are_different()
-        {
-            IScrapperCinema cinemasPage = DiffObjets();
-            Assert.IsTrue(cinemasPage.HasChanged());
-        }
-
-        [TestMethod]
         public void Should_return_json_data()
         {
             IScrapperCinema cinemasPage = EqualObjets();
-            cinemasPage.HasChanged();
+            cinemasPage.GetHtmlFromUrl();
             Assert.IsTrue(cinemasPage.JsonContent.Length > 100);
         }
 
@@ -57,16 +43,16 @@ namespace CinevoTests
         public void Should_return_return_a_list_of_cinemas()
         {
             IScrapperCinema cinemasPage = EqualObjets();
-            cinemasPage.HasChanged();
+            cinemasPage.GetHtmlFromUrl();
             Assert.IsTrue(cinemasPage.Cinemas.Count > 5);
         }
-        [TestMethod]
-        public void Should_save_all_cinemas_in_db()
-        {
-            IScrapperCinema cinemasPage = DiffObjets();
-            cinemasPage.HasChanged();
-            Assert.IsTrue(cinemasPage.SaveToDb());
-        }
+        //[TestMethod]
+        //public void Should_save_all_cinemas_in_db()
+        //{
+        //    IScrapperCinema cinemasPage = DiffObjets();
+        //    cinemasPage.GetHtmlFromUrl();
+        //    Assert.IsTrue(cinemasPage.SaveToDb());
+        //}
 
     }
 }

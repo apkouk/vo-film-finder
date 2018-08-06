@@ -64,7 +64,6 @@
     <Compile Include="Interfaces\IScrapperFilm.cs" />
     <Compile Include="Interfaces\IScrapperTown.cs" />
     <Compile Include="Models\Time.cs" />
-    <Compile Include="Properties\CinevoScrapper.cs" />
     <Compile Include="Properties\CinevoScrapper.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -82,9 +81,9 @@
     <Compile Include="Models\Town.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scrappers\CinemaScrapper.cs" />
-    <Compile Include="Scrappers\FilmInfoScrapper.cs" />
+    <Compile Include="Scrappers\IndexScrapper.cs" />
     <Compile Include="Scrappers\FilmScrapper.cs" />
+    <Compile Include="Scrappers\CinemaScrapper.cs" />
     <Compile Include="Interfaces\IScrapperFilmInfo.cs" />
     <Compile Include="Scrappers\TownScrapper.cs" />
   </ItemGroup>
@@ -97,10 +96,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HtmlFiles\FilmScrapper\Processed\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="HtmlFiles\TownsAndCinemas\Processed\Town_636582400563688154.html" />
+    <Folder Include="HtmlFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

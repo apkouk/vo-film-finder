@@ -4,10 +4,11 @@
     {
         public enum PageTypes
         {
-            Town,
             Cinema,
             Film,
-            FilmInfo
+            FilmInfo,
+            CinemasIndex,
+            Town
         }
         public enum Warning
         {
