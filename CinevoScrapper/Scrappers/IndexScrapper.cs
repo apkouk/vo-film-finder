@@ -99,9 +99,7 @@ namespace CinevoScrapper.Scrappers
 
         public bool SaveToDb()
         {
-            if (HasChanged)
-                return CinevoMongoDb.SaveCinemasInDd(Cinemas);
-            return false;
+            return CinevoMongoDb.SaveCinemasInDd(Cinemas);
         }
 
         private Cinema ConvertToObject(ArrayList linesPerCinema)

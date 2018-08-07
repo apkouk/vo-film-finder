@@ -65,18 +65,27 @@ namespace CinevoScrapper.Helpers
 
             foreach (Cinema obj in cinemas)
             {
-                var document = new BsonDocument
+                if (obj.OriginalVersionFilms != null)
                 {
-                    {"Id", obj.CinemaId ?? string.Empty},
-                    {"Name", obj.Name ?? string.Empty},
-                    {"Tag", obj.Tag ?? string.Empty},
-                    {"Address", obj.Address ?? string.Empty},
-                    {"Telephone", obj.Telephone ?? string.Empty},
-                    {"Url", obj.Url ?? string.Empty},
-                    {"TownId", obj.TownId ?? string.Empty},
-                    {"Town", obj.Town ?? string.Empty}
-                };
-                bsons.Add(document);
+                    var document = new BsonDocument
+                    {
+                        {"Id", obj.CinemaId ?? string.Empty},
+                        {"Name", obj.Name ?? string.Empty},
+                        {"Tag", obj.Tag ?? string.Empty},
+                        {"Address", obj.Address ?? string.Empty},
+                        {"Telephone", obj.Telephone ?? string.Empty},
+                        {"Url", obj.Url ?? string.Empty},
+                        {"NightPasses ", obj.NightPasses  ?? string.Empty},
+                        {"MorningPasses ", obj.MorningPasses  ?? string.Empty},
+                        {"CheapDay ", obj.CheapDay  ?? string.Empty},
+                        {"OnlineTickets ", obj.OnlineTickets  ?? string.Empty},
+                        {"MapUrl ", obj.MapUrl  ?? string.Empty},
+                        {"TownId", obj.TownId ?? string.Empty},
+                        {"Town", obj.Town ?? string.Empty},
+                        {"Film", JsonConvert.SerializeObject(obj.OriginalVersionFilms).Trim().TrimEnd().TrimStart()  }
+                    };
+                    bsons.Add(document);
+                }
             }
 
             collection.InsertManyAsync(bsons.AsEnumerable()).Wait();

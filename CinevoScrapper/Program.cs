@@ -12,9 +12,12 @@ namespace CinevoScrapper
     {
         private static void Main(string[] args)
         {
+            //string dateExecution = DateTime.Now.ToString("ddMMyyyy");
+            string dateExecution = "06082018";
+
             IScrapperCinema cinemas = new IndexScrapper
             {
-                Path = Properties.CinevoScrapper.Default.CinemasIndex + DateTime.Now.ToString("ddMMyyyy"),
+                Path = Properties.CinevoScrapper.Default.CinemasIndex + dateExecution,
                 Url = "https://cartelera.elperiodico.com/cines/",
                 ForceRequest = !Convert.ToBoolean(Properties.CinevoScrapper.Default.ForceRequest)
             };
@@ -27,7 +30,7 @@ namespace CinevoScrapper
                 {
                     IScrapperFilms filmScrapper = new CinemaScrapper
                     {
-                        Path = Properties.CinevoScrapper.Default.Cinemas + DateTime.Now.ToString("ddMMyyyy"),
+                        Path = Properties.CinevoScrapper.Default.Cinemas + dateExecution,
                         Url = cinema.Url,
                         Cinema = cinema,
                         ForceRequest = !Convert.ToBoolean(Properties.CinevoScrapper.Default.ForceRequest)
@@ -42,7 +45,7 @@ namespace CinevoScrapper
                     {
                         IScrapperFilmInfo filmInfoScrapper = new FilmScrapper
                         {
-                            Path = Properties.CinevoScrapper.Default.Film + DateTime.Now.ToString("ddMMyyyy"),
+                            Path = Properties.CinevoScrapper.Default.Film + dateExecution,
                             Film = film,
                             ForceRequest = !Convert.ToBoolean(Properties.CinevoScrapper.Default.ForceRequest)
                         };
@@ -50,9 +53,11 @@ namespace CinevoScrapper
                     }
                 }
                 
+                IEnumerable<Cinema> defCinemaList = GetOnlyOriginalVersion(cinemas.Cinemas).Where(x => x.OriginalVersionFilms.Any());
+                cinemas.Cinemas = defCinemaList.ToList();
+                cinemas.SaveToDb();
 
 
-                List<Cinema> cinemaTest = cinemas.Cinemas.Where(x => x.Films.Any(y => y.Version != "(VE)")).ToList();
             }
             catch (Exception e)
             {
@@ -60,6 +65,38 @@ namespace CinevoScrapper
                 throw;
             }
             Console.ReadLine();
+        }
+
+        private static List<Cinema> GetOnlyOriginalVersion(List<Cinema> cinemaTest)
+        {
+            foreach (var cinema in cinemaTest)
+            {
+                foreach (var film in cinema.Films)
+                {
+                    switch (film.Version)
+                    {
+                        case "(VE)":
+                            break;
+
+                        case "(VC)":
+                            break;
+
+                        default:
+                            cinema.OriginalVersionFilms.Add(film);
+                            break;
+
+                    }
+                }
+            }
+
+            return cinemaTest;
+
+        }
+
+        private static void RemoveFilm(Cinema cinema, Film film, List<Cinema> cinemaTest)
+        {
+            Cinema cinemaFiltered = cinemaTest.Single(x => x.CinemaId == cinema.CinemaId);
+            cinemaFiltered.Films.Remove(film);
         }
 
         private static void CleanFiles(string path, string pathProcessed)

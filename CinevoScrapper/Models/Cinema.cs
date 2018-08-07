@@ -38,6 +38,7 @@ namespace CinevoScrapper.Models
         public string TownId { get; set; }
         [BsonElement]
         public string Town { get; set; }
-        public List<Film> Films = new List<Film>();
+        public readonly List<Film> Films = new List<Film>();
+        public readonly List<Film> OriginalVersionFilms = new List<Film>();
     }
 }
