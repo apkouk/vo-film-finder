@@ -67,6 +67,29 @@ namespace CinevoScrapper.Helpers
             {
                 if (obj.OriginalVersionFilms != null)
                 {
+                    var arrayFilms = new BsonArray();
+                    foreach (var objFilm in obj.OriginalVersionFilms)
+                    {
+                        var film = new BsonDocument
+                        {
+                            {"Name", objFilm.Name ?? string.Empty},
+                            {"Durantion", objFilm.Durantion ?? string.Empty},
+                            {"Genre", objFilm.Genre ?? string.Empty},
+                            {"FirstShown", objFilm.FirstShown ?? string.Empty},
+                            {"Director", objFilm.Name ?? string.Empty},
+                            {"Actors", objFilm.Durantion ?? string.Empty},
+                            {"Description", objFilm.Genre ?? string.Empty},
+                            {"FilmUrl", objFilm.FilmUrl ?? string.Empty},
+                            {"Image", objFilm.Image ?? string.Empty},
+                            {"Video", objFilm.Video ?? string.Empty},
+                            {"Version", objFilm.Version ?? string.Empty},
+                            {"Tag", objFilm.Tag ?? string.Empty},
+                            {"Country", objFilm.Country ?? string.Empty}
+                        };
+                        arrayFilms.Add(film);
+                    }
+
+
                     var document = new BsonDocument
                     {
                         {"Id", obj.CinemaId ?? string.Empty},
@@ -82,7 +105,7 @@ namespace CinevoScrapper.Helpers
                         {"MapUrl ", obj.MapUrl  ?? string.Empty},
                         {"TownId", obj.TownId ?? string.Empty},
                         {"Town", obj.Town ?? string.Empty},
-                        {"Film", JsonConvert.SerializeObject(obj.OriginalVersionFilms).Trim().TrimEnd().TrimStart()  }
+                        {"Films", arrayFilms }
                     };
                     bsons.Add(document);
                 }

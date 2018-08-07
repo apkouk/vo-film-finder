@@ -1,24 +1,42 @@
 ﻿using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace CinevoScrapper.Models
 {
     public class Film
     {
-        public string Name { get; set; }
-        public string Durantion { get; set; }
-        public string Genre { get; set; }
-        public string FirstShown { get; set; }
-        public string Director { get; set; }
-        public string Actors { get; set; }
-        public string Description { get; set; }
-        public string FilmUrl { get; set; }
-        public List<Time> Times { get; set; }
-        public string Image { get; set; }
-        public string Video { get; set; }
-        public string Version { get; set; }
-        public string Tag { get; set; }
-        public string Country { get; set; }
+        [BsonId]
+        public ObjectId _id { get; set; }
 
+        [BsonElement]
+        public string Name { get; set; }
+        [BsonElement]
+        public string Durantion { get; set; }
+        [BsonElement]
+        public string Genre { get; set; }
+        [BsonElement]
+        public string FirstShown { get; set; }
+        [BsonElement]
+        public string Director { get; set; }
+        [BsonElement]
+        public string Actors { get; set; }
+        [BsonElement]
+        public string Description { get; set; }
+        [BsonElement]
+        public string FilmUrl { get; set; }
+        [BsonElement]
+        public List<Time> Times { get; set; }
+        [BsonElement]
+        public string Image { get; set; }
+        [BsonElement]
+        public string Video { get; set; }
+        [BsonElement]
+        public string Version { get; set; }
+        [BsonElement]
+        public string Tag { get; set; }
+        [BsonElement]
+        public string Country { get; set; }
 
         public Film()
         {
@@ -28,5 +46,5 @@ namespace CinevoScrapper.Models
     }
 
 
-    
+
 }

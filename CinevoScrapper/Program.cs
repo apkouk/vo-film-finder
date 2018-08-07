@@ -53,11 +53,8 @@ namespace CinevoScrapper
                     }
                 }
                 
-                IEnumerable<Cinema> defCinemaList = GetOnlyOriginalVersion(cinemas.Cinemas).Where(x => x.OriginalVersionFilms.Any());
-                cinemas.Cinemas = defCinemaList.ToList();
+                cinemas.Cinemas = (List<Cinema>) GetOnlyOriginalVersion(cinemas.Cinemas).Where(x => x.OriginalVersionFilms.Any());
                 cinemas.SaveToDb();
-
-
             }
             catch (Exception e)
             {

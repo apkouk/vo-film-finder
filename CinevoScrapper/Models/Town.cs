@@ -20,10 +20,6 @@ namespace CinevoScrapper.Models
         [BsonElement]
         public string Tag { get; set; }
 
-        public List<Cinema> Cinemas
-        {
-            get { return _cinemas; }
-            set { _cinemas = value; }
-        }
+      
     }
 }
