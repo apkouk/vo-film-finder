@@ -13,11 +13,11 @@ namespace CinevoTests.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
-    internal sealed partial class CinevoScrapperTest : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class CinevoScraperTest : global::System.Configuration.ApplicationSettingsBase {
         
-        private static CinevoScrapperTest defaultInstance = ((CinevoScrapperTest)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new CinevoScrapperTest())));
+        private static CinevoScraperTest defaultInstance = ((CinevoScraperTest)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new CinevoScraperTest())));
         
-        public static CinevoScrapperTest Default {
+        public static CinevoScraperTest Default {
             get {
                 return defaultInstance;
             }

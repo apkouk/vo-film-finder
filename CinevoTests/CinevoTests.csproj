@@ -56,15 +56,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FilmScrapperTests.cs" />
-    <Compile Include="TownScrapperTests.cs" />
+    <Compile Include="FilmScraperTests.cs" />
+    <Compile Include="TownScraperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\CinevoScrapperTest.Designer.cs">
       <DependentUpon>CinevoScrapperTest.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="CinemaScrapperTests.cs" />
+    <Compile Include="CinemaScraperTests.cs" />
     <Compile Include="HelpersTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,21 +84,16 @@
     <Content Include="FilesAreDiff\Old\Old.html" />
     <Content Include="FilesAreEqual\Downloaded.html" />
     <Content Include="FilesAreEqual\Old\Old.html" />
-    <Content Include="pruebas.html" />
     <Content Include="HtmlFiles\TownsAndCinemas\Processed\Town_636582400563688154.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CinevoScrapper\CinevoScrapper.csproj">
-      <Project>{62ec8a46-68d4-40c9-ade5-9c0aa848b320}</Project>
-      <Name>CinevoScrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VersioOriginalTester\CinevoScrapper.csproj">
-      <Project>{62ec8a46-68d4-40c9-ade5-9c0aa848b320}</Project>
-      <Name>CinevoScrapper</Name>
-    </ProjectReference>
+    <Folder Include="HtmlFiles\Films\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HtmlFiles\Films\" />
+    <ProjectReference Include="..\CinevoScraper\CinevoScraper.csproj">
+      <Project>{62ec8a46-68d4-40c9-ade5-9c0aa848b320}</Project>
+      <Name>CinevoScraper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

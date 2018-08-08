@@ -1,13 +1,13 @@
 ﻿using System.IO;
+using CinevoScraper.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CinevoScrapper.Helpers;
 
 namespace CinevoTests
 {
     [TestClass]
     public class HelpersTest
     {
-        readonly string path = Properties.CinevoScrapperTest.Default.Temporal;
+        readonly string path = Properties.CinevoScraperTest.Default.Temporal;
         readonly string extension = "html";
         readonly string content = "TESTING CONTENT";
 

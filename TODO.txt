@@ -3,7 +3,6 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 
 DOING NOW => 
-- Rename to scraper... 
 - Clean database (refract a bit...)
 - Find more info about types in mongodb
 - Times in Day class should be a list of datetimes

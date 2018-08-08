@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CinevoScraper.Properties" GeneratedClassName="CinevoScraper">
+  <Profiles />
+  <Settings>
+    <Setting Name="CleanDirectories" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Cinemas" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\HtmlFiles\Cinemas\</Value>
+    </Setting>
+    <Setting Name="Film" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\HtmlFiles\Films\</Value>
+    </Setting>
+    <Setting Name="ForceRequest" Type="System.String" Scope="User">
+      <Value Profile="(Default)">true</Value>
+    </Setting>
+    <Setting Name="CinemasIndex" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\HtmlFiles\CinemaIndex\</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

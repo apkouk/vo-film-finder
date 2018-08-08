@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CinevoTests.Properties" GeneratedClassName="CinevoScrapperTest">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CinevoTests.Properties" GeneratedClassName="CinevoScraperTest">
   <Profiles />
   <Settings>
     <Setting Name="EqualFilesDownloaded" Type="System.String" Scope="Application">
