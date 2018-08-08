@@ -34,7 +34,7 @@ namespace CinevoScrapper.Scrappers
                     CinevoFiles.SaveToFile(Path, CinevoEnums.PageTypes.CinemasIndex.ToString(), "html", HtmlContent);
                 }
 
-                GetContentInJson(Path);
+                ScrapeHtml(Path);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace CinevoScrapper.Scrappers
             }
         }
 
-        public void GetContentInJson(string path)
+        public void ScrapeHtml(string path)
         {
             JsonContent = "NO CONTENT";
             var addLine = false;
@@ -99,7 +99,7 @@ namespace CinevoScrapper.Scrappers
 
         public bool SaveToDb()
         {
-            return CinevoMongoDb.SaveCinemasInDd(Cinemas);
+            return CinevoMongoDb.SaveCinemasInDb(Cinemas);
         }
 
         private Cinema ConvertToObject(ArrayList linesPerCinema)

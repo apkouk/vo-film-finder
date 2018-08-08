@@ -63,7 +63,7 @@
     <Compile Include="Interfaces\IScrapperCinemaFilms.cs" />
     <Compile Include="Interfaces\IScrapperFilm.cs" />
     <Compile Include="Interfaces\IScrapperTown.cs" />
-    <Compile Include="Models\Time.cs" />
+    <Compile Include="Models\Day.cs" />
     <Compile Include="Properties\CinevoScrapper.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

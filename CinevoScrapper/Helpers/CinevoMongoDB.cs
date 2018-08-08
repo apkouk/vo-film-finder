@@ -1,28 +1,27 @@
-﻿using System;
+﻿using CinevoScrapper.Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CinevoScrapper.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Driver;
-using Newtonsoft.Json;
-using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace CinevoScrapper.Helpers
 {
     public static class CinevoMongoDb
     {
+
+        
+        private const string ConnectionString = "mongodb://127.0.0.1:27017";
+        //private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
+        private const string DataBase = "cinevo";
+
+
         public static bool SaveTownsInDd(List<Town> towns)
         {
             try
             {
-                var connectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
-                var client = new MongoClient(connectionString);
-                IMongoDatabase db = client.GetDatabase("cinevo");
+                var client = new MongoClient(ConnectionString);
+                IMongoDatabase db = client.GetDatabase(DataBase);
                 db.DropCollection("Towns");
                 db.CreateCollection("Towns");
                 var collection = db.GetCollection<BsonDocument>("Towns");
@@ -33,10 +32,10 @@ namespace CinevoScrapper.Helpers
                 {
                     var document = new BsonDocument
                     {
-                        {"Id", obj.Id},
-                        {"Name", obj.Name},
-                        {"Tag", obj.Tag},
-                        {"Url", obj.Url}
+                        {"Id", new BsonInt64(Convert.ToInt64(obj.Id))},
+                        {"Name", new BsonString(obj.Name)},
+                        {"Tag", new BsonString(obj.Tag)},
+                        {"Url", new BsonString(obj.Url)}
                     };
                     bsons.Add(document);
                 }
@@ -52,29 +51,28 @@ namespace CinevoScrapper.Helpers
             }
         }
 
-        public static bool SaveCinemasInDd(List<Cinema> cinemas)
+        public static bool SaveCinemasInDb(List<Cinema> cinemas)
         {
-            var connectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
-            var client = new MongoClient(connectionString);
-            IMongoDatabase db = client.GetDatabase("cinevo");
+            var client = new MongoClient(ConnectionString);
+            IMongoDatabase db = client.GetDatabase(DataBase);
             db.DropCollection("Cinemas");
             db.CreateCollection("Cinemas");
             var collection = db.GetCollection<BsonDocument>("Cinemas");
 
-            List<BsonDocument> bsons = new List<BsonDocument>();
+            List<BsonDocument> cinevoDocuments = new List<BsonDocument>();
 
             foreach (Cinema obj in cinemas)
             {
                 if (obj.OriginalVersionFilms != null)
                 {
                     var arrayFilms = new BsonArray();
-                    foreach (var objFilm in obj.OriginalVersionFilms)
+                    foreach (Film objFilm in obj.OriginalVersionFilms)
                     {
                         var arrayDays = new BsonArray();
-                        foreach (var objDay in objFilm.Days)
+                        foreach (Day objDay in objFilm.Days)
                         {
                             var arrayTimes = new BsonArray();
-                            foreach (var filmTIme in objDay.Times)
+                            foreach (string filmTIme in objDay.Times)
                             {
                                 var time = new BsonDocument
                                 {
@@ -92,7 +90,6 @@ namespace CinevoScrapper.Helpers
                             arrayDays.Add(day);
                         }
 
-
                         var film = new BsonDocument
                         {
                             {"Name", objFilm.Name ?? string.Empty},
@@ -100,7 +97,7 @@ namespace CinevoScrapper.Helpers
                             {"Genre", objFilm.Genre ?? string.Empty},
                             {"FirstShown", objFilm.FirstShown ?? string.Empty},
                             {"Director", objFilm.Name ?? string.Empty},
-                            {"Actors", objFilm.Durantion ?? string.Empty},
+                            {"Actors", objFilm.Actors ?? string.Empty},
                             {"Description", objFilm.Genre ?? string.Empty},
                             {"FilmUrl", objFilm.FilmUrl ?? string.Empty},
                             {"Image", objFilm.Image ?? string.Empty},
@@ -114,7 +111,7 @@ namespace CinevoScrapper.Helpers
                     }
 
 
-                    var document = new BsonDocument
+                    var cinema = new BsonDocument
                     {
                         {"Id", obj.CinemaId ?? string.Empty},
                         {"Name", obj.Name ?? string.Empty},
@@ -131,11 +128,11 @@ namespace CinevoScrapper.Helpers
                         {"Town", obj.Town ?? string.Empty},
                         {"Films", arrayFilms }
                     };
-                    bsons.Add(document);
+                    cinevoDocuments.Add(cinema);
                 }
             }
 
-            collection.InsertManyAsync(bsons.AsEnumerable()).Wait();
+            collection.InsertManyAsync(cinevoDocuments.AsEnumerable()).Wait();
             var count = collection.AsQueryable().Count();
             return cinemas.Count == count;
         }

@@ -1,15 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace CinevoScrapper.Interfaces
+﻿namespace CinevoScrapper.Interfaces
 {
     public interface IScrapper 
     {
         string JsonContent { get; }
-        string Path { get; }
-        string PathProcessed { get; }
-      
         void GetHtmlFromUrl();
-        void GetContentInJson(string path);
+        void ScrapeHtml(string htmlPath);
         bool SaveToDb();
     }
 }

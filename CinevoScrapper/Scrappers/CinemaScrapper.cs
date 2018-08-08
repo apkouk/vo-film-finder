@@ -39,7 +39,7 @@ namespace CinevoScrapper.Scrappers
                     HtmlContent = CinevoRequests.GetContent(Cinema.Url).Trim().TrimEnd().TrimStart();
                     CinevoFiles.SaveToFile(Path, Cinema.Tag, "html", HtmlContent);
                 }
-                GetContentInJson(Path);
+                ScrapeHtml(Path);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace CinevoScrapper.Scrappers
             }
         }
 
-        public void GetContentInJson(string path)
+        public void ScrapeHtml(string path)
         {
             string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Cinema.Tag));
 

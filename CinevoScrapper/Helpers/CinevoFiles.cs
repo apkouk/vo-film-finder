@@ -46,20 +46,20 @@ namespace CinevoScrapper.Helpers
                 if (Scrapper.JsonContent == null)
                 {
                     Scrapper.GetHtmlFromUrl();
-                    Scrapper.GetContentInJson(Path);
+                    Scrapper.ScrapeHtml(Path);
                 }
 
                 switch (Type)
                 {
                     case CinevoEnums.PageTypes.Town:
                         IScrapperTown townComparer = new TownScrapper();
-                        townComparer.GetContentInJson(OldFilePath);
+                        townComparer.ScrapeHtml(OldFilePath);
                         HasChanged = !Scrapper.JsonContent.Equals(townComparer.JsonContent);
                         //Scrapper.SaveToDbAsync();
                         break;
                     case CinevoEnums.PageTypes.Cinema:
                         IScrapperCinema cinemaComparer = new IndexScrapper();
-                        cinemaComparer.GetContentInJson(OldFilePath);
+                        cinemaComparer.ScrapeHtml(OldFilePath);
                         HasChanged = !Scrapper.JsonContent.Equals(cinemaComparer.JsonContent);
                         //Scrapper.SaveToDbAsync();
                         break;

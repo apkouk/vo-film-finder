@@ -37,7 +37,7 @@ namespace CinevoScrapper.Scrappers
                         CinevoFiles.SaveToFile(Path, Film.Tag, "html", HtmlContent);
                     }
                 }
-                GetContentInJson(Path);
+                ScrapeHtml(Path);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace CinevoScrapper.Scrappers
 
 
 
-        public void GetContentInJson(string path)
+        public void ScrapeHtml(string path)
         {
             string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Film.Tag));
 
@@ -65,7 +65,7 @@ namespace CinevoScrapper.Scrappers
                     //---------------
 
                     if (updatingDescription)
-                        Film.Description = CinevoStrings.StripHtml(line).TrimStart();
+                        Film.Description = CinevoStrings.StripHtml(line).TrimStart().TrimEnd();
 
                     if (line.Contains(StartDescription))
                         updatingDescription = true;
@@ -76,22 +76,22 @@ namespace CinevoScrapper.Scrappers
                     //---------------
 
                     if (line.Contains(StartActors))
-                        Film.Actors = CinevoStrings.StripHtml(line).Replace(StartActors, string.Empty).TrimStart();
+                        Film.Actors = CinevoStrings.StripHtml(line).Replace(StartActors, string.Empty).TrimStart().TrimEnd();
 
                     if (line.Contains(StartDirector))
-                        Film.Director = CinevoStrings.StripHtml(line).Replace(StartDirector, string.Empty).TrimStart();
+                        Film.Director = CinevoStrings.StripHtml(line).Replace(StartDirector, string.Empty).TrimStart().TrimEnd();
 
                     if (line.Contains(StartEstreno))
-                        Film.FirstShown = CinevoStrings.StripHtml(line).Replace(StartEstreno, string.Empty).TrimStart();
+                        Film.FirstShown = CinevoStrings.StripHtml(line).Replace(StartEstreno, string.Empty).TrimStart().TrimEnd();
 
                     if (line.Contains(StartGenre))
-                        Film.Genre = CinevoStrings.StripHtml(line).Replace(StartGenre, string.Empty).TrimStart();
+                        Film.Genre = CinevoStrings.StripHtml(line).Replace(StartGenre, string.Empty).TrimStart().TrimEnd();
 
                     if (line.Contains(StartDuration))
-                        Film.Durantion = CinevoStrings.StripHtml(line).Replace(StartDuration, string.Empty).TrimStart();
+                        Film.Durantion = CinevoStrings.StripHtml(line).Replace(StartDuration, string.Empty).TrimStart().TrimEnd();
 
                     if (line.Contains(StartCountry))
-                        Film.Country = CinevoStrings.StripHtml(line).Replace(StartCountry, string.Empty).TrimStart();
+                        Film.Country = CinevoStrings.StripHtml(line).Replace(StartCountry, string.Empty).TrimStart().TrimEnd();
 
                 }
                 fileReader.Close();

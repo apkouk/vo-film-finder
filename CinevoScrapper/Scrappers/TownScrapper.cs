@@ -69,7 +69,7 @@ namespace CinevoScrapper.Scrappers
             }
         }
 
-        public void GetContentInJson(string path)
+        public void ScrapeHtml(string path)
         {
             JsonContent = "NO CONTENT";
             var addLine = false;
