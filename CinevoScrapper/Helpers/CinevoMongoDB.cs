@@ -70,6 +70,29 @@ namespace CinevoScrapper.Helpers
                     var arrayFilms = new BsonArray();
                     foreach (var objFilm in obj.OriginalVersionFilms)
                     {
+                        var arrayDays = new BsonArray();
+                        foreach (var objDay in objFilm.Days)
+                        {
+                            var arrayTimes = new BsonArray();
+                            foreach (var filmTIme in objDay.Times)
+                            {
+                                var time = new BsonDocument
+                                {
+                                    {"Time", filmTIme ?? string.Empty},
+                                };
+                                arrayTimes.Add(time);
+                            }
+
+
+                            var day = new BsonDocument
+                            {
+                                {"Day", objDay.DayOfWeek ?? string.Empty},
+                                {"Times", arrayTimes}
+                            };
+                            arrayDays.Add(day);
+                        }
+
+
                         var film = new BsonDocument
                         {
                             {"Name", objFilm.Name ?? string.Empty},
@@ -84,7 +107,8 @@ namespace CinevoScrapper.Helpers
                             {"Video", objFilm.Video ?? string.Empty},
                             {"Version", objFilm.Version ?? string.Empty},
                             {"Tag", objFilm.Tag ?? string.Empty},
-                            {"Country", objFilm.Country ?? string.Empty}
+                            {"Country", objFilm.Country ?? string.Empty},
+                            {"Sessions", arrayDays}
                         };
                         arrayFilms.Add(film);
                     }

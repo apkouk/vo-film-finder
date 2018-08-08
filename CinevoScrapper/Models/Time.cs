@@ -6,24 +6,12 @@ using System.Threading.Tasks;
 
 namespace CinevoScrapper.Models
 {
-    public class Time
+    public class Day
     {
-        private string _day;
-        public string Day
-        {
-            get { return _day; }
-            set { _day = value; }
-        }
+        public string DayOfWeek { get; set; }
+        public List<string> Times { get; set; }
 
-        private List<string> _times;
-        public List<string> Times
-        {
-            get { return _times; }
-            set { _times = value; }
-        }
-
-
-        public Time()
+        public Day()
         {
             Times = new List<string>();
         }

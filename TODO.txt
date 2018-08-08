@@ -3,8 +3,7 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 
 DOING NOW => 
-- Once we have the info done will have to save everything on db (on localhost)
-- Get info from db
+- Clean database (refract a bit...)
 
 
 GENERAL
@@ -16,8 +15,7 @@ GENERAL
 - We don´t need to save the html on a file, use objects
 
 DATABASE
-- One document with all tonws, every town will have a collection of cinemas and every cinema will have a collection of films with a collection of showings
-- Make one document for old date and another one for the new data, much easier to compare data and make inserts/deletes
+
 
 APIS
 - Will make an api using WebApi (.net) to get films info on demmand

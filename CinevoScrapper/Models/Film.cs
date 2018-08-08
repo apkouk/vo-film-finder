@@ -26,7 +26,7 @@ namespace CinevoScrapper.Models
         [BsonElement]
         public string FilmUrl { get; set; }
         [BsonElement]
-        public List<Time> Times { get; set; }
+        public List<Day> Days { get; set; }
         [BsonElement]
         public string Image { get; set; }
         [BsonElement]
@@ -40,7 +40,7 @@ namespace CinevoScrapper.Models
 
         public Film()
         {
-            Times = new List<Time>();
+            Days = new List<Day>();
         }
 
     }

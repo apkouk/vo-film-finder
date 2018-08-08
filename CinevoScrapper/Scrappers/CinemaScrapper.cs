@@ -169,7 +169,7 @@ namespace CinevoScrapper.Scrappers
             try
             {
                 var film = new Film();
-                Time time = null;
+                Day time = null;
                 bool addingDay = false;
                 const string baseUrl = "https://cartelera.elperiodico.com";
 
@@ -207,7 +207,7 @@ namespace CinevoScrapper.Scrappers
                         {
                             if (lineHtml.Trim().Contains("<dt>"))
                             {
-                                time = new Time {Day = CinevoStrings.GetChunk(lineHtml, ">", "</")};
+                                time = new Day {DayOfWeek = CinevoStrings.GetChunk(lineHtml, ">", "</")};
                             }
                             if (lineHtml.Trim().Contains("<dd>"))
                                 time?.Times.Add(CinevoStrings.GetChunk(lineHtml, ">", "</"));
@@ -215,7 +215,7 @@ namespace CinevoScrapper.Scrappers
                             if (lineHtml.Trim().Contains("</dl>"))
                             {
                                 addingDay = false;
-                                film.Times.Add(time);
+                                film.Days.Add(time);
                             }
                         }
                     }
