@@ -11,8 +11,8 @@ namespace CinevoScraper.Helpers
     {
 
         
-        private const string ConnectionString = "mongodb://127.0.0.1:27017";
-        //private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
+        //private const string ConnectionString = "mongodb://127.0.0.1:27017";
+        private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
         private const string DataBase = "cinevo";
 
 
@@ -63,7 +63,7 @@ namespace CinevoScraper.Helpers
 
             foreach (Cinema obj in cinemas)
             {
-                if (obj.OriginalVersionFilms != null)
+                if (obj.OriginalVersionFilms != null && obj.OriginalVersionFilms.Count > 0)
                 {
                     var arrayFilms = new BsonArray();
                     foreach (Film objFilm in obj.OriginalVersionFilms)
@@ -132,7 +132,8 @@ namespace CinevoScraper.Helpers
                 }
             }
 
-            collection.InsertManyAsync(cinevoDocuments.AsEnumerable()).Wait();
+            if(cinevoDocuments.Count > 0)
+                collection.InsertManyAsync(cinevoDocuments.AsEnumerable()).Wait();
             var count = collection.AsQueryable().Count();
             return cinemas.Count == count;
         }

@@ -12,16 +12,14 @@ namespace CinevoScraper.Scrapers
 {
     public class IndexScraper : IScraperCinema
     {
-        private int count = 1;
+        private int _count = 1;
         public string Url { get; set; }
         public string HtmlContent { get; set; }
         public string JsonContent { get; set; }
         public bool ForceRequest { get; set; }
         public string Path { get; set; }
         public string PathProcessed { get; set; }
-        public bool HasChanged { get; set; }
         public List<Cinema> Cinemas { get; set; }
-        public bool FindFilms { get; set; }
 
         public void GetHtmlFromUrl()
         {
@@ -33,7 +31,10 @@ namespace CinevoScraper.Scrapers
                     CinevoFiles.SaveToFile(Path, CinevoEnums.PageTypes.CinemasIndex.ToString(), "html", HtmlContent);
                 }
 
+                Console.WriteLine("Scraping cinemas index");
+                Console.WriteLine("----\n");
                 ScrapeHtml(Path);
+
             }
             catch (Exception ex)
             {
@@ -106,7 +107,7 @@ namespace CinevoScraper.Scrapers
             try
             {
                 var cinema = new Cinema();
-                cinema.CinemaId = count++.ToString();
+                cinema.CinemaId = _count++.ToString();
                 foreach (string lineHtml in linesPerCinema)
                 {
                     if (lineHtml.Contains("col-xs-12 col-sm-6 col-md-6 info-cine"))

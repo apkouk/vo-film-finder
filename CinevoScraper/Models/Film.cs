@@ -38,6 +38,8 @@ namespace CinevoScraper.Models
         [BsonElement]
         public string Country { get; set; }
 
+        public bool IsOriginalVersion { get; set; }
+
         public Film()
         {
             Days = new List<Day>();

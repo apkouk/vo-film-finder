@@ -3,20 +3,17 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 
 DOING NOW => 
-- Clean database (refract a bit...)
-- Find more info about types in mongodb
-- Times in Day class should be a list of datetimes
+- Get info left from films (videos, mapLoc and mapLng, etc)
+- Times in Day class should be a list of datetimes and now we are getting just ONE seasson O_o
+- How to download images c# :) 
 
 GENERAL
 - Refract GetJsonContent method
 - Move all configurations and parameters to mongoDb and create CinevoConfiguration class
-- How to download images c# :)
-- Process to get just the differences between jsons/collections
-- Copy HtmlFiles folder from scrapper to test solution every time we build
 - We don´t need to save the html on a file, use objects
 
 DATABASE
-
+- Types (URL, Integer,...) MongoDB <-> C#
 
 APIS
 - Will make an api using WebApi (.net) to get films info on demmand
@@ -31,7 +28,7 @@ ERROR HANDLING
 - Add try/catch wherever they needed
 
 INVESTIGATE
-- Find out why the test for checking that two file are equal get considerably more time thant the others
+- Find more info about types in mongodb
 
 ADDINGS
 - We are reading the html file twice to get town and cinemas data. We can make it doing it once, it's the same file (not important for now)
@@ -43,9 +40,6 @@ FRONTEND
 - In React :)
 	FILTERS
 		Town, Cinema, Film, Distance
-
-BACKEND
-- MEARN
 
 INFRASCTRUCTURE
 - The cinevo scrapper will update just once a day while I'm having my laptop on

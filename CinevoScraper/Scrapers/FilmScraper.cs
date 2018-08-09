@@ -16,7 +16,8 @@ namespace CinevoScraper.Scrapers
         public string PathProcessed { get; set; }
         public bool ForceRequest { get; set; }
 
-        public Film Film { get; set; }     
+        public Film Film { get; set; }
+        public Cinema Cinema { get; set; }
 
         private const string StartActors = "REPARTO:";
         private const string StartDirector = "DIRECCIÓN:";
@@ -30,15 +31,18 @@ namespace CinevoScraper.Scrapers
         {
             try
             {
-                if (ForceRequest)
+                if (ForceRequest && Film.IsOriginalVersion)
                 {
+                    if (!Directory.Exists(Path))
+                        Directory.CreateDirectory(Path);
+
                     if (new DirectoryInfo(Path).GetFiles().Where(x => x.FullName.Contains(Film.Tag)).ToList().Count == 0)
                     {
                         HtmlContent = CinevoRequests.GetContent(Film.FilmUrl).Trim().TrimEnd().TrimStart();
                         CinevoFiles.SaveToFile(Path, Film.Tag, "html", HtmlContent);
                     }
                 }
-                ScrapeHtml(Path);
+                ScrapeFilm();
             }
             catch (Exception ex)
             {
@@ -46,23 +50,32 @@ namespace CinevoScraper.Scrapers
             }
         }
 
+        private void ScrapeFilm()
+        {
+            if (Film.IsOriginalVersion)
+            {
+                ScrapeHtml(Path);
+                Cinema.OriginalVersionFilms.Add(Film);
+            }
+        }
 
 
         public void ScrapeHtml(string path)
         {
             string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Film.Tag));
-
+            Console.WriteLine("Scraping film -> " + Film.Name);
+            Console.WriteLine("----\n");
             if (!string.IsNullOrEmpty(files))
             {
                 var fileReader = new StreamReader(files);
                 string line;
-          
+
                 bool updatingDescription = false;
 
                 while ((line = fileReader.ReadLine()) != null)
                 {
                     line = CinevoStrings.RemoveChars(line, '\u0009');
-                   
+
                     //---------------
 
                     if (updatingDescription)
@@ -73,7 +86,7 @@ namespace CinevoScraper.Scrapers
 
                     if (!String.IsNullOrEmpty(Film.Description))
                         updatingDescription = false;
-                    
+
                     //---------------
 
                     if (line.Contains(StartActors))
@@ -99,7 +112,7 @@ namespace CinevoScraper.Scrapers
                 fileReader.Dispose();
             }
         }
-        
+
         public bool SaveToDb()
         {
             throw new NotImplementedException();

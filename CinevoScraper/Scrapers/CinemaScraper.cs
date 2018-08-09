@@ -48,7 +48,8 @@ namespace CinevoScraper.Scrapers
         public void ScrapeHtml(string path)
         {
             string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Cinema.Tag));
-
+            Console.WriteLine("Scraping cinema -> " + Cinema.Name);
+              Console.WriteLine("----\n");
             if (!string.IsNullOrEmpty(files))
             {
                 Films = new List<Film>();
@@ -181,17 +182,16 @@ namespace CinevoScraper.Scrapers
                         if (lineHtml.Contains("Ver película"))
                             film.FilmUrl = baseUrl + CinevoStrings.GetChunk(lineHtml, "href=\"", "\" title");
 
-                        if (lineHtml.Contains("(") && lineHtml.Contains(")"))
+                        if (lineHtml.Contains("(") && lineHtml.Contains(")") && lineHtml.Contains("V"))
+                        {
                             film.Version = lineHtml;
+                            film.IsOriginalVersion = IsOriginalVersion(film.Version);
+                        }
 
                         if (lineHtml.Contains("href=\"") && lineHtml.Contains("title=\"") && lineHtml.Contains("class=\""))
                         { 
                             film.Name = CinevoStrings.GetChunk(lineHtml, "\">", "</a>");
-
-
-                            //var invalidChars = System.IO.Path.GetInvalidFileNameChars();
-                            //var invalidCharsRemoved = film.Name.Where(x => !invalidChars.Contains(x)).ToArray().ToString();
-
+                            
                             string tagTemp = !film.Name.Equals(string.Empty)
                                 ? film.Name.Replace(",", "").Replace(" ", "-").Replace("#","").TrimEnd().TrimStart().ToLower()
                                 : film.Tag = "NOTAG";
@@ -227,6 +227,11 @@ namespace CinevoScraper.Scrapers
             }
         }
 
-       
+        private bool IsOriginalVersion(string filmVersion)
+        {
+            if (filmVersion.Contains("VE") || filmVersion.Contains("VC"))
+                return false;
+            return true;
+        }
     }
 }

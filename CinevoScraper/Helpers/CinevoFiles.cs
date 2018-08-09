@@ -55,18 +55,13 @@ namespace CinevoScraper.Helpers
                         IScraperTown townComparer = new TownScraper();
                         townComparer.ScrapeHtml(OldFilePath);
                         HasChanged = !Scraper.JsonContent.Equals(townComparer.JsonContent);
-                        //Scraper.SaveToDbAsync();
                         break;
                     case CinevoEnums.PageTypes.Cinema:
                         IScraperCinema cinemaComparer = new IndexScraper();
                         cinemaComparer.ScrapeHtml(OldFilePath);
                         HasChanged = !Scraper.JsonContent.Equals(cinemaComparer.JsonContent);
-                        //Scraper.SaveToDbAsync();
                         break;
                 }
-
-
-                Console.WriteLine("CINEVO FILES: " + Type.ToString() + " comparision done");
             }
         }
 

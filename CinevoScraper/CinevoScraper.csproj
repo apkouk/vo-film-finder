@@ -7,8 +7,8 @@
     <ProjectGuid>{62EC8A46-68D4-40C9-ADE5-9C0AA848B320}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CinevoScrapper</RootNamespace>
-    <AssemblyName>CinevoScrapper</AssemblyName>
+    <RootNamespace>CinevoScraper</RootNamespace>
+    <AssemblyName>CinevoScraper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
