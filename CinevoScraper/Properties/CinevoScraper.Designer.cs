@@ -79,5 +79,17 @@ namespace CinevoScraper.Properties {
                 this["CinemasIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\HtmlFiles\\Images\\")]
+        public string Images {
+            get {
+                return ((string)(this["Images"]));
+            }
+            set {
+                this["Images"] = value;
+            }
+        }
     }
 }

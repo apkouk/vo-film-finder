@@ -30,7 +30,7 @@ namespace CinevoScraper.Models
         [BsonElement]
         public string Image { get; set; }
         [BsonElement]
-        public string Video { get; set; }
+        public string Trailer { get; set; }
         [BsonElement]
         public string Version { get; set; }
         [BsonElement]

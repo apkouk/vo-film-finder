@@ -3,9 +3,7 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 
 DOING NOW => 
-- Get info left from films (videos, mapLoc and mapLng, etc)
 - Times in Day class should be a list of datetimes and now we are getting just ONE seasson O_o
-- How to download images c# :) 
 
 GENERAL
 - Refract GetJsonContent method

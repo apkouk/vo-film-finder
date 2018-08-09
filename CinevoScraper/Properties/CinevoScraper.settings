@@ -17,5 +17,8 @@
     <Setting Name="CinemasIndex" Type="System.String" Scope="User">
       <Value Profile="(Default)">..\..\HtmlFiles\CinemaIndex\</Value>
     </Setting>
+    <Setting Name="Images" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\HtmlFiles\Images\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

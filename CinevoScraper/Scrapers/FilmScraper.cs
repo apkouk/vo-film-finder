@@ -26,6 +26,7 @@ namespace CinevoScraper.Scrapers
         private const string StartDescription = "SINOPSIS:";
         private const string StartEstreno = "ESTRENO:";
         private const string StartCountry = "PAÝS:";
+        private const string StartTrailer = "iframe width";
 
         public void GetHtmlFromUrl()
         {
@@ -89,6 +90,9 @@ namespace CinevoScraper.Scrapers
 
                     //---------------
 
+                    if (line.Contains(StartTrailer) && Film?.Trailer == null)
+                        Film.Trailer = CinevoStrings.GetChunk(line, "src=\"", "\" frameborder");
+
                     if (line.Contains(StartActors))
                         Film.Actors = CinevoStrings.StripHtml(line).Replace(StartActors, string.Empty).TrimStart().TrimEnd();
 
@@ -112,6 +116,8 @@ namespace CinevoScraper.Scrapers
                 fileReader.Dispose();
             }
         }
+
+
 
         public bool SaveToDb()
         {

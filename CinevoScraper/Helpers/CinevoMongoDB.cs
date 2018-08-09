@@ -11,8 +11,8 @@ namespace CinevoScraper.Helpers
     {
 
         
-        //private const string ConnectionString = "mongodb://127.0.0.1:27017";
-        private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
+        private const string ConnectionString = "mongodb://127.0.0.1:27017";
+        //private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
         private const string DataBase = "cinevo";
 
 
@@ -101,7 +101,7 @@ namespace CinevoScraper.Helpers
                             {"Description", objFilm.Genre ?? string.Empty},
                             {"FilmUrl", objFilm.FilmUrl ?? string.Empty},
                             {"Image", objFilm.Image ?? string.Empty},
-                            {"Video", objFilm.Video ?? string.Empty},
+                            {"Trailer", objFilm.Trailer ?? string.Empty},
                             {"Version", objFilm.Version ?? string.Empty},
                             {"Tag", objFilm.Tag ?? string.Empty},
                             {"Country", objFilm.Country ?? string.Empty},
@@ -126,6 +126,8 @@ namespace CinevoScraper.Helpers
                         {"MapUrl ", obj.MapUrl  ?? string.Empty},
                         {"TownId", obj.TownId ?? string.Empty},
                         {"Town", obj.Town ?? string.Empty},
+                        {"Latitude", obj.Latitude ?? string.Empty},
+                        {"Longitude", obj.Longitude?? string.Empty},
                         {"Films", arrayFilms }
                     };
                     cinevoDocuments.Add(cinema);

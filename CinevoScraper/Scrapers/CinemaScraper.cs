@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using CinevoScraper.Classes;
 using CinevoScraper.Helpers;
 using CinevoScraper.Interfaces;
@@ -49,7 +50,7 @@ namespace CinevoScraper.Scrapers
         {
             string files = Directory.GetFiles(path).ToList().First(x => x.Contains(Cinema.Tag));
             Console.WriteLine("Scraping cinema -> " + Cinema.Name);
-              Console.WriteLine("----\n");
+            Console.WriteLine("----\n");
             if (!string.IsNullOrEmpty(files))
             {
                 Films = new List<Film>();
@@ -85,8 +86,33 @@ namespace CinevoScraper.Scrapers
                 fileReader.Close();
                 fileReader.Dispose();
             }
+
+            DownloadImages();
         }
-        
+
+        private void DownloadImages()
+        {
+            foreach (Film film in Cinema.Films)
+            {
+                if (film.IsOriginalVersion)
+                {
+                    if (!film.Image.Contains("no-foto-pelicula.gif"))
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            if (!Directory.Exists(Properties.CinevoScraper.Default.Images))
+                                Directory.CreateDirectory(Properties.CinevoScraper.Default.Images);
+
+                            if (new DirectoryInfo(Path).GetFiles().Where(x => x.FullName.Contains(film.Image)).ToList().Count == 0)
+                            {
+                                client.DownloadFile(new Uri(film.Image.Replace('"', ' ').Trim()), Properties.CinevoScraper.Default.Images + film.Tag + ".jpg");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private bool _addLine;
         private readonly ArrayList _linesPerFilm = new ArrayList();
         private void GetFilmInfo(string lineHtml)
@@ -155,7 +181,16 @@ namespace CinevoScraper.Scrapers
 
                 if (lineHtml.Contains("<img src="))
                     Cinema.MapUrl = CinevoStrings.GetChunk(lineHtml, "<img src=", ">");
+
+                if (Cinema.MapUrl != null)
+                    SetMapValues();
             }
+        }
+
+        private void SetMapValues()
+        {
+            Cinema.Latitude = CinevoStrings.GetChunk(Cinema.MapUrl, "|", ",");
+            Cinema.Longitude = CinevoStrings.GetChunk(Cinema.MapUrl, ",", "&mobile");
         }
 
         public bool SaveToDb()
@@ -189,11 +224,11 @@ namespace CinevoScraper.Scrapers
                         }
 
                         if (lineHtml.Contains("href=\"") && lineHtml.Contains("title=\"") && lineHtml.Contains("class=\""))
-                        { 
+                        {
                             film.Name = CinevoStrings.GetChunk(lineHtml, "\">", "</a>");
-                            
+
                             string tagTemp = !film.Name.Equals(string.Empty)
-                                ? film.Name.Replace(",", "").Replace(" ", "-").Replace("#","").TrimEnd().TrimStart().ToLower()
+                                ? film.Name.Replace(",", "").Replace(" ", "-").Replace("#", "").TrimEnd().TrimStart().ToLower()
                                 : film.Tag = "NOTAG";
 
                             film.Tag = System.IO.Path.GetInvalidFileNameChars().Aggregate(tagTemp, (current, c) => current.Replace(c.ToString(), string.Empty));
@@ -205,7 +240,7 @@ namespace CinevoScraper.Scrapers
                         {
                             if (lineHtml.Trim().Contains("<dt>"))
                             {
-                                time = new Day {DayOfWeek = CinevoStrings.GetChunk(lineHtml, ">", "</")};
+                                time = new Day { DayOfWeek = CinevoStrings.GetChunk(lineHtml, ">", "</") };
                             }
                             if (lineHtml.Trim().Contains("<dd>"))
                                 time?.Times.Add(CinevoStrings.GetChunk(lineHtml, ">", "</"));
