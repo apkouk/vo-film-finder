@@ -1,30 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CinevoScraper.Models;
+﻿using CinevoScraper.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CinevoScraper.Helpers
 {
+
+
     public static class CinevoMongoDb
     {
+        public class ModelContext
+        {
+            private const string ConnectionString = "mongodb://127.0.0.1:27017";
+            //private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
+            private const string DatabaseName = "cinevo";
 
-        
-        private const string ConnectionString = "mongodb://127.0.0.1:27017";
-        //private const string ConnectionString = "mongodb+srv://cinevo:EB03HsKpqj0GQ0Bb@cinevo-jg8gu.mongodb.net/test";
-        private const string DataBase = "cinevo";
+            private IMongoClient Client { get; set; }
+            public IMongoDatabase Database { get; set; }
+            private static ModelContext _modelContext;
+
+            private ModelContext()
+            {
+            }
+
+            public static ModelContext Create()
+            {
+                if (_modelContext == null)
+                {
+                    _modelContext = new ModelContext { Client = new MongoClient(ConnectionString) };
+                    _modelContext.Database = _modelContext.Client.GetDatabase(DatabaseName);
+                }
+
+                return _modelContext;
+            }
+
+            public IMongoCollection<CinevoSettings> CinevoSettings => Database.GetCollection<CinevoSettings>("SystemParametres");
+        }
+
+
+        private static CinevoSettings _cinevoSettings;
+        public static CinevoSettings GetSettings()
+        {
+            if (_cinevoSettings == null)
+            {
+                ModelContext modelContext = ModelContext.Create();
+                var filter = Builders<CinevoSettings>.Filter.Empty;
+                _cinevoSettings = modelContext.CinevoSettings.FindSync<CinevoSettings>(filter).ToList()[0];
+            }
+            return _cinevoSettings;
+        }
+
 
 
         public static bool SaveTownsInDd(List<Town> towns)
         {
             try
             {
-                var client = new MongoClient(ConnectionString);
-                IMongoDatabase db = client.GetDatabase(DataBase);
-                db.DropCollection("Towns");
-                db.CreateCollection("Towns");
-                var collection = db.GetCollection<BsonDocument>("Towns");
+                ModelContext modelContext = ModelContext.Create();
+                modelContext.Database.DropCollection("Towns");
+                modelContext.Database.CreateCollection("Towns");
+                var collection = modelContext.Database.GetCollection<BsonDocument>("Towns");
 
                 List<BsonDocument> bsons = new List<BsonDocument>();
 
@@ -53,11 +90,10 @@ namespace CinevoScraper.Helpers
 
         public static bool SaveCinemasInDb(List<Cinema> cinemas)
         {
-            var client = new MongoClient(ConnectionString);
-            IMongoDatabase db = client.GetDatabase(DataBase);
-            db.DropCollection("Cinemas");
-            db.CreateCollection("Cinemas");
-            var collection = db.GetCollection<BsonDocument>("Cinemas");
+            ModelContext modelContext = ModelContext.Create();
+            modelContext.Database.DropCollection("Cinemas");
+            modelContext.Database.CreateCollection("Cinemas");
+            var collection = modelContext.Database.GetCollection<BsonDocument>("Cinemas");
 
             List<BsonDocument> cinevoDocuments = new List<BsonDocument>();
 
@@ -134,7 +170,7 @@ namespace CinevoScraper.Helpers
                 }
             }
 
-            if(cinevoDocuments.Count > 0)
+            if (cinevoDocuments.Count > 0)
                 collection.InsertManyAsync(cinevoDocuments.AsEnumerable()).Wait();
             var count = collection.AsQueryable().Count();
             return cinemas.Count == count;

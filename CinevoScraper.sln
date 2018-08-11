@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinevoScraper", "CinevoScra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD6136F7-D2B3-4A28-AC24-05EBAB3B2577}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\StartMongoDB.ps1 = ..\..\..\..\Desktop\StartMongoDB.ps1
 		TODO.txt = TODO.txt
 	EndProjectSection
 EndProject

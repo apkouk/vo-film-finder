@@ -3,12 +3,14 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 
 DOING NOW => 
+- Move all configurations and parameters to mongoDb and create CinevoConfiguration class
+- We don´t need to save the html on a file, use objects
 - Times in Day class should be a list of datetimes and now we are getting just ONE seasson O_o
+
 
 GENERAL
 - Refract GetJsonContent method
-- Move all configurations and parameters to mongoDb and create CinevoConfiguration class
-- We don´t need to save the html on a file, use objects
+
 
 DATABASE
 - Types (URL, Integer,...) MongoDB <-> C#

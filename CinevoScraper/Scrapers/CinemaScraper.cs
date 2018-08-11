@@ -100,12 +100,12 @@ namespace CinevoScraper.Scrapers
                     {
                         using (WebClient client = new WebClient())
                         {
-                            if (!Directory.Exists(Properties.CinevoScraper.Default.Images))
-                                Directory.CreateDirectory(Properties.CinevoScraper.Default.Images);
+                            if (!Directory.Exists(CinevoParameters.CinevoSettings.PathImages))
+                                Directory.CreateDirectory(CinevoParameters.CinevoSettings.PathImages);
 
                             if (new DirectoryInfo(Path).GetFiles().Where(x => x.FullName.Contains(film.Image)).ToList().Count == 0)
                             {
-                                client.DownloadFile(new Uri(film.Image.Replace('"', ' ').Trim()), Properties.CinevoScraper.Default.Images + film.Tag + ".jpg");
+                                client.DownloadFile(new Uri(film.Image.Replace('"', ' ').Trim()), CinevoParameters.CinevoSettings.PathImages + film.Tag + ".jpg");
                             }
                         }
                     }
